@@ -184,28 +184,28 @@
 // ─── STORE DEFINITIONS ───────────────────────────────────────────────────────
 // Maps ADP code → store info including DW name for reference
 const STORES = [
-  { adp: "LUE", name: "GBGS Opry",               region: "East", status: "Mature",  mgmtCost: 123.29 },
-  { adp: "HYM", name: "GBGS The Colony",          region: "East", status: "Mature",  mgmtCost: 123.29 },
-  { adp: "AY4", name: "GBGS MOA",                 region: "West", status: "Ramping", mgmtCost: 123.29 },
-  { adp: "ZTA", name: "GBGS SF Wharf",            region: "West", status: "Ramping", mgmtCost: 123.29 },
-  { adp: "ZTP", name: "GBGS Houston",             region: "East", status: "Ramping", mgmtCost: 123.29 },
-  { adp: "ZTM", name: "GBGS Oak Brook",           region: "West", status: "Ramping", mgmtCost: 123.29 },
-  { adp: "ZZV", name: "GBGS Pigeon Forge",        region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "SKP", name: "GBGS New Jersey",          region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "ZU8", name: "GBGS Las Vegas",           region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "ASE", name: "GBGS Honolulu",            region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "VPF", name: "GBGS Georgetown",          region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "ZU9", name: "GBGS St. Louis",           region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "ZUE", name: "GBGS San Jose",            region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "MW2", name: "GBGS Seattle Downtown",    region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "LYC", name: "GBGS Seattle Southcenter", region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "DW9", name: "GBGS Times Square",        region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "QTV", name: "GBGS Las Vegas Area 15",   region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "RX8", name: "GBGS Murray",              region: "West", status: "New",     mgmtCost: 123.29 },
-  { adp: "00H", name: "GBGS Birmingham",          region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "E3G", name: "GBGS Orlando",             region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "E3Q", name: "GBGS Atlanta",             region: "East", status: "New",     mgmtCost: 123.29 },
-  { adp: "J2M", name: "GBGS Schaumburg",          region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "LUE", name: "GBGS Opry",               region: "East", status: "Mature",  mgmtCost: 123.29, laborPctGoal: 18.80 },
+  { adp: "HYM", name: "GBGS The Colony",          region: "East", status: "Mature",  mgmtCost: 123.29, laborPctGoal: 18.60 },
+  { adp: "AY4", name: "GBGS MOA",                 region: "West", status: "Ramping", mgmtCost: 123.29, laborPctGoal: 29.87 },
+  { adp: "ZTA", name: "GBGS SF Wharf",            region: "West", status: "Ramping", mgmtCost: 123.29, laborPctGoal: 39.39 },
+  { adp: "ZTP", name: "GBGS Houston",             region: "East", status: "Ramping", mgmtCost: 123.29, laborPctGoal: 23.50 },
+  { adp: "ZTM", name: "GBGS Oak Brook",           region: "West", status: "Ramping", mgmtCost: 123.29, laborPctGoal: 20.11 },
+  { adp: "ZZV", name: "GBGS Pigeon Forge",        region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 25.00 },
+  { adp: "SKP", name: "GBGS New Jersey",          region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 18.00 },
+  { adp: "ZU8", name: "GBGS Las Vegas",           region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 22.98 },
+  { adp: "ASE", name: "GBGS Honolulu",            region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 31.14 },
+  { adp: "VPF", name: "GBGS Georgetown",          region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 19.50 },
+  { adp: "ZU9", name: "GBGS St. Louis",           region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 20.00 },
+  { adp: "ZUE", name: "GBGS San Jose",            region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 23.80 },
+  { adp: "MW2", name: "GBGS Seattle Downtown",    region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 27.81 },
+  { adp: "LYC", name: "GBGS Seattle Southcenter", region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 33.67 },
+  { adp: "DW9", name: "GBGS Times Square",        region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 20.00 },
+  { adp: "QTV", name: "GBGS Las Vegas Area 15",   region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 21.91 },
+  { adp: "RX8", name: "GBGS Murray",              region: "West", status: "New",     mgmtCost: 123.29, laborPctGoal: 35.21 },
+  { adp: "00H", name: "GBGS Birmingham",          region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 28.00 },
+  { adp: "E3G", name: "GBGS Orlando",             region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 35.00 },
+  { adp: "E3Q", name: "GBGS Atlanta",             region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 50.00 },
+  { adp: "J2M", name: "GBGS Schaumburg",          region: "East", status: "New",     mgmtCost: 123.29, laborPctGoal: 50.00 },
 ];
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -254,7 +254,7 @@ function fmtHrs(n) {
 }
 
 function pctClass(pct, goal) {
-  if (pct == null) return '';
+  if (pct == null || goal == null) return '';
   const ratio = pct / goal;
   if (ratio <= 1.05) return 'pct-good';
   if (ratio <= 1.20) return 'pct-warn';
@@ -271,6 +271,9 @@ function buildCard(store) {
   const totalCost = (laborCost != null) ? laborCost + mgmt : null;
   const hpg       = (laborHrs != null && games > 0) ? (laborHrs / games).toFixed(2) : null;
   const laborPct  = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
+  const goal      = store.laborPctGoal;
+  const goalCost  = (goal != null && revenue > 0) ? (goal / 100 * revenue) : null;
+  const dollarVar = (totalCost != null && goalCost != null) ? (totalCost - goalCost) : null;
 
   // status badge
   const statusClass = `status-${store.status.toLowerCase()}`;
@@ -297,8 +300,8 @@ function buildCard(store) {
   const kpiPct = laborPct != null
     ? `<div class="kpi">
         <div class="kpi-label">Labor % Rev</div>
-        <div class="kpi-value ${pctClass(laborPct, 20)}">${laborPct.toFixed(1)}%</div>
-        <div class="kpi-sub">goal ≤ 20%</div>
+        <div class="kpi-value ${pctClass(laborPct, goal)}">${laborPct.toFixed(1)}%</div>
+        <div class="kpi-sub">goal ${goal != null ? goal.toFixed(1)+'%' : '—'}</div>
        </div>`
     : `<div class="kpi">
         <div class="kpi-label">Labor % Rev</div>
@@ -331,16 +334,43 @@ function buildCard(store) {
       </div>
     </div>`;
 
-  // Labor % bar
+  // Labor % bar + dollar variance
   let pctBar;
-  if (laborPct != null) {
-    const cls = pctClass(laborPct, 20);
-    const w = Math.min(laborPct, 60) / 60 * 100; // scale bar to 60% max
+  if (laborPct != null && goal != null) {
+    const cls = pctClass(laborPct, goal);
+    const maxPct = Math.max(laborPct, goal) * 1.2;
+    const wActual = laborPct / maxPct * 100;
+    const wGoal   = goal / maxPct * 100;
+    const varAbs  = Math.abs(dollarVar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const varLabel = dollarVar > 0
+      ? `<span class="pct-over">$${varAbs} over</span>`
+      : dollarVar < 0
+        ? `<span class="pct-good">$${varAbs} under</span>`
+        : `<span class="pct-good">On target</span>`;
+    pctBar = `<div class="pct-row" style="flex-wrap:wrap;gap:6px">
+      <div class="pct-label" style="width:100%;margin-bottom:2px">Labor % of Revenue</div>
+      <div style="flex:1;min-width:120px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-bottom:3px">
+          <span>0%</span><span style="color:#94a3b8">goal ${goal.toFixed(1)}%</span><span>${maxPct.toFixed(0)}%</span>
+        </div>
+        <div class="pct-bar-track" style="height:8px;position:relative">
+          <div class="pct-bar-fill ${cls}" style="width:${wActual}%"></div>
+          <div style="position:absolute;top:0;bottom:0;left:${wGoal}%;width:2px;background:#475569;border-radius:1px"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px">
+        <span class="${cls}" style="font-weight:700">${laborPct.toFixed(1)}%</span>
+        <span style="color:#334155">vs ${goal.toFixed(1)}% goal</span>
+        ${varLabel}
+      </div>
+    </div>`;
+  } else if (laborPct != null) {
+    const cls = 'pct-good';
     pctBar = `<div class="pct-row">
-      <div class="pct-label">Labor %</div>
-      <div class="pct-bar-track"><div class="pct-bar-fill ${cls}" style="width:${w}%"></div></div>
+      <div class="pct-label">Labor % Rev</div>
+      <div class="pct-bar-track"><div class="pct-bar-fill ${cls}" style="width:${Math.min(laborPct,60)/60*100}%"></div></div>
       <div class="pct-value ${cls}">${laborPct.toFixed(1)}%</div>
-      <div class="pct-goal">/ goal 20%</div>
+      <div class="pct-goal">no goal set</div>
     </div>`;
   } else {
     pctBar = `<div class="pct-row"><div class="pct-none">Upload ADP report to see labor % of revenue</div></div>`;
