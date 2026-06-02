@@ -366,20 +366,30 @@ function buildCard(store) {
       : dollarVar < 0
         ? `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">$${varAbs} under</span>`
         : `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">On target</span>`;
-    pctBar = `<div class="pct-row" style="flex-wrap:wrap;gap:6px">
-      <div class="pct-label" style="width:100%;margin-bottom:2px">Labor % of Revenue</div>
-      <div style="flex:1;min-width:120px">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-bottom:3px">
-          <span>0%</span><span style="color:#94a3b8">goal ${goal.toFixed(1)}%</span><span>${maxPct.toFixed(0)}%</span>
+    const bgStyle = cls === 'pct-good'
+      ? 'background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2)'
+      : cls === 'pct-warn'
+        ? 'background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2)'
+        : 'background:rgba(251,113,133,0.10);border:1px solid rgba(251,113,133,0.24)';
+    const textColor = cls === 'pct-good' ? '#5eead4' : cls === 'pct-warn' ? '#fcd34d' : '#fda4af';
+    const barColor  = cls === 'pct-good' ? 'rgba(45,212,191,0.5)' : cls === 'pct-warn' ? 'rgba(245,158,11,0.5)' : 'rgba(251,113,133,0.5)';
+
+    pctBar = `<div style="${bgStyle};border-radius:8px;padding:10px 12px">
+      <div style="font-size:11px;font-weight:500;color:${textColor};margin-bottom:8px">Labor % of Revenue</div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px">
+          <span>0%</span><span>goal ${goal.toFixed(1)}%</span><span>${maxPct.toFixed(0)}%</span>
         </div>
-        <div class="pct-bar-track" style="height:8px;position:relative">
-          <div class="pct-bar-fill ${cls}" style="width:${wActual}%"></div>
-          <div style="position:absolute;top:0;bottom:0;left:${wGoal}%;width:2px;background:#475569;border-radius:1px"></div>
+        <div class="pct-bar-track" style="height:6px;position:relative;background:rgba(255,255,255,0.08)">
+          <div style="height:100%;border-radius:3px;width:${wActual}%;background:${barColor}"></div>
+          <div style="position:absolute;top:-2px;bottom:-2px;left:${wGoal}%;width:2px;background:rgba(255,255,255,0.3);border-radius:1px"></div>
         </div>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;font-size:12px">
-        <span class="${cls}" style="font-weight:700">${laborPct.toFixed(1)}%</span>
-        <span style="color:#334155">vs ${goal.toFixed(1)}% goal</span>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:20px;font-weight:700;color:${textColor}">${laborPct.toFixed(1)}%</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.35)">vs ${goal.toFixed(1)}% goal</span>
+        </div>
         ${varLabel}
       </div>
     </div>`;
