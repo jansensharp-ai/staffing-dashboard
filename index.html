@@ -119,7 +119,15 @@
     border-radius: 7px;
     padding: 9px 11px;
   }
-  .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin-bottom: 4px; }
+  .kpi.kpi-bg-good { background: rgba(45,212,191,0.10); border-color: rgba(45,212,191,0.25); }
+  .kpi.kpi-bg-warn { background: rgba(245,158,11,0.10); border-color: rgba(245,158,11,0.25); }
+  .kpi.kpi-bg-over { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.28); }
+
+  .kpi-label { font-size: 11px; font-weight: 500; color: #94a3b8; margin-bottom: 5px; letter-spacing: 0; }
+  .kpi.kpi-bg-good .kpi-label { color: rgba(45,212,191,0.7); }
+  .kpi.kpi-bg-warn .kpi-label { color: rgba(245,158,11,0.7); }
+  .kpi.kpi-bg-over .kpi-label { color: rgba(251,113,133,0.7); }
+
   .kpi-value { font-size: 19px; font-weight: 700; color: #f1f5f9; line-height: 1; }
   .kpi-sub   { font-size: 10px; color: #64748b; margin-top: 3px; }
   .kpi-pending { font-size: 13px; font-weight: 600; color: #475569; }
@@ -138,7 +146,7 @@
     border-radius: 7px;
     padding: 8px 10px;
   }
-  .labor-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin-bottom: 3px; }
+  .labor-label { font-size: 11px; font-weight: 500; color: #94a3b8; margin-bottom: 3px; }
   .labor-value { font-size: 14px; font-weight: 700; color: #f1f5f9; }
   .labor-pending { font-size: 12px; font-weight: 500; color: #334155; }
 
@@ -264,6 +272,14 @@ function pctClass(pct, goal) {
   return 'pct-over';
 }
 
+function kpiBgClass(pct, goal) {
+  if (pct == null || goal == null) return '';
+  const ratio = pct / goal;
+  if (ratio <= 1.05) return 'kpi-bg-good';
+  if (ratio <= 1.20) return 'kpi-bg-warn';
+  return 'kpi-bg-over';
+}
+
 function buildCard(store) {
   const d = DATA.stores[store.adp] || {};
   const games     = d.games ?? 0;
@@ -301,13 +317,13 @@ function buildCard(store) {
        </div>`;
 
   const kpiPct = laborPct != null
-    ? `<div class="kpi">
-        <div class="kpi-label">Labor % Rev</div>
-        <div class="kpi-value ${pctClass(laborPct, goal)}">${laborPct.toFixed(1)}%</div>
+    ? `<div class="kpi ${kpiBgClass(laborPct, goal)}">
+        <div class="kpi-label">Labor % of Rev</div>
+        <div class="kpi-value">${laborPct.toFixed(1)}%</div>
         <div class="kpi-sub">goal ${goal != null ? goal.toFixed(1)+'%' : '—'}</div>
        </div>`
     : `<div class="kpi">
-        <div class="kpi-label">Labor % Rev</div>
+        <div class="kpi-label">Labor % of Rev</div>
         <div class="kpi-pending">—</div>
         <div class="kpi-sub">awaiting ADP</div>
        </div>`;
@@ -346,10 +362,10 @@ function buildCard(store) {
     const wGoal   = goal / maxPct * 100;
     const varAbs  = Math.abs(dollarVar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const varLabel = dollarVar > 0
-      ? `<span class="pct-over">$${varAbs} over</span>`
+      ? `<span style="background:rgba(251,113,133,0.12);border:1px solid rgba(251,113,133,0.28);color:#fda4af;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">$${varAbs} over</span>`
       : dollarVar < 0
-        ? `<span class="pct-good">$${varAbs} under</span>`
-        : `<span class="pct-good">On target</span>`;
+        ? `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">$${varAbs} under</span>`
+        : `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">On target</span>`;
     pctBar = `<div class="pct-row" style="flex-wrap:wrap;gap:6px">
       <div class="pct-label" style="width:100%;margin-bottom:2px">Labor % of Revenue</div>
       <div style="flex:1;min-width:120px">
