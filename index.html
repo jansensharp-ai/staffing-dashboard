@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zone Staffing Dashboard</title>
+<title>GBGS Staffing Dashboard</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,42 +17,44 @@
 
   header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     padding-bottom: 20px;
     border-bottom: 1px solid #1e2535;
+    gap: 16px;
+    flex-wrap: wrap;
   }
 
-  header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.3px;
-  }
+  header h1 { font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+  header .subtitle { font-size: 13px; color: #64748b; margin-top: 3px; }
 
-  header .subtitle {
+  .header-right { text-align: right; }
+  .report-date { font-size: 22px; font-weight: 700; color: #f1f5f9; }
+  .report-label { font-size: 11px; color: #475569; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .no-adp-banner {
+    background: #1c1a10;
+    border: 1px solid #3d3308;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 20px;
     font-size: 13px;
-    color: #64748b;
-    margin-top: 3px;
+    color: #d4a929;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .last-updated {
-    font-size: 12px;
-    color: #475569;
-    text-align: right;
-  }
-
-  /* Zone filter tabs */
   .zone-tabs {
     display: flex;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
 
   .zone-tab {
-    padding: 6px 16px;
+    padding: 5px 14px;
     border-radius: 20px;
     border: 1px solid #1e2535;
     background: transparent;
@@ -61,593 +63,332 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-
   .zone-tab:hover { border-color: #334155; color: #cbd5e1; }
-  .zone-tab.active { background: #1e40af; border-color: #1e40af; color: #fff; }
+  .zone-tab.active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
 
-  /* Grid */
   .store-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
   }
 
   .store-card {
     background: #161b27;
     border: 1px solid #1e2535;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
-    transition: border-color 0.15s;
   }
-
-  .store-card:hover { border-color: #334155; }
 
   .card-header {
-    padding: 16px 20px 14px;
+    padding: 14px 16px 12px;
     border-bottom: 1px solid #1e2535;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 8px;
   }
 
-  .store-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: #f1f5f9;
-  }
+  .store-name { font-size: 15px; font-weight: 700; color: #f1f5f9; }
+  .store-region { font-size: 11px; color: #64748b; margin-top: 2px; }
 
-  .store-meta {
-    font-size: 12px;
-    color: #64748b;
-    margin-top: 3px;
-  }
-
-  .zone-badge {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 11px;
+  .status-badge {
+    font-size: 10px;
     font-weight: 600;
-    background: #1e2535;
-    color: #94a3b8;
+    padding: 2px 8px;
+    border-radius: 10px;
     white-space: nowrap;
     flex-shrink: 0;
   }
+  .status-mature  { background: #052e16; color: #34d399; border: 1px solid #065f46; }
+  .status-ramping { background: #1e1a05; color: #fbbf24; border: 1px solid #713f12; }
+  .status-new     { background: #0f172a; color: #94a3b8; border: 1px solid #1e2535; }
 
-  .card-body { padding: 16px 20px; }
+  .card-body { padding: 14px 16px; }
 
-  /* KPI row */
-  .kpi-row {
+  /* Main KPI row */
+  .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 18px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
   }
 
   .kpi {
     background: #0f1117;
     border: 1px solid #1e2535;
-    border-radius: 8px;
-    padding: 10px 12px;
+    border-radius: 7px;
+    padding: 9px 11px;
+  }
+  .kpi-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin-bottom: 4px; }
+  .kpi-value { font-size: 19px; font-weight: 700; color: #f1f5f9; line-height: 1; }
+  .kpi-sub   { font-size: 10px; color: #64748b; margin-top: 3px; }
+  .kpi-pending { font-size: 13px; font-weight: 600; color: #475569; }
+
+  /* Labor cost row */
+  .labor-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
   }
 
-  .kpi-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: #475569;
-    margin-bottom: 4px;
-  }
-
-  .kpi-value {
-    font-size: 20px;
-    font-weight: 700;
-    color: #f1f5f9;
-    line-height: 1;
-  }
-
-  .kpi-sub {
-    font-size: 10px;
-    color: #64748b;
-    margin-top: 3px;
-  }
-
-  /* Coverage ratio color coding */
-  .coverage-good  { color: #34d399; }
-  .coverage-warn  { color: #fbbf24; }
-  .coverage-bad   { color: #f87171; }
-
-  /* Staff breakdown */
-  .staff-breakdown {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-
-  .staff-pill {
-    flex: 1;
+  .labor-cell {
     background: #0f1117;
     border: 1px solid #1e2535;
-    border-radius: 8px;
+    border-radius: 7px;
     padding: 8px 10px;
-    text-align: center;
   }
+  .labor-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #475569; margin-bottom: 3px; }
+  .labor-value { font-size: 14px; font-weight: 700; color: #f1f5f9; }
+  .labor-pending { font-size: 12px; font-weight: 500; color: #334155; }
 
-  .staff-pill .pill-num {
-    font-size: 18px;
-    font-weight: 700;
-    color: #f1f5f9;
-  }
-
-  .staff-pill .pill-label {
-    font-size: 10px;
-    color: #475569;
-    margin-top: 2px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* FT/PT bar */
-  .ft-pt-bar {
-    margin-bottom: 18px;
-  }
-
-  .ft-pt-label-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: #64748b;
-    margin-bottom: 5px;
-  }
-
-  .bar-track {
-    height: 6px;
-    background: #1e2535;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .bar-fill-ft {
-    height: 100%;
-    background: #3b82f6;
-    border-radius: 3px;
-    transition: width 0.3s;
-  }
-
-  /* Monthly fill chart */
-  .section-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: #475569;
-    margin-bottom: 10px;
-  }
-
-  .fill-chart {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    height: 64px;
-    margin-bottom: 4px;
-  }
-
-  .fill-bar-wrap {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    position: relative;
-  }
-
-  .fill-bar-outer {
-    width: 100%;
-    background: #1e2535;
-    border-radius: 3px 3px 0 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .fill-bar-inner {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 3px 3px 0 0;
-    transition: height 0.3s;
-  }
-
-  .fill-bar-current .fill-bar-outer { border: 1px solid #3b82f6; }
-
-  .fill-month-labels {
-    display: flex;
-    gap: 3px;
-    margin-top: 4px;
-  }
-
-  .fill-month-label {
-    flex: 1;
-    text-align: center;
-    font-size: 9px;
-    color: #475569;
-  }
-
-  .fill-month-label.current { color: #3b82f6; font-weight: 600; }
-
-  /* Alerts */
-  .alerts-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 14px;
-  }
-
-  .alert-chip {
+  /* Labor % bar */
+  .pct-row {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
+    gap: 10px;
   }
 
-  .alert-ok   { background: #052e16; color: #34d399; border: 1px solid #065f46; }
-  .alert-warn { background: #431407; color: #fb923c; border: 1px solid #7c2d12; }
-  .alert-bad  { background: #450a0a; color: #f87171; border: 1px solid #7f1d1d; }
-
-  /* Peak info */
-  .peak-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 14px;
-    padding: 10px 12px;
-    background: #0f1117;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    font-size: 12px;
-  }
-
-  .peak-row .peak-label { color: #64748b; }
-  .peak-row .peak-val { color: #f1f5f9; font-weight: 600; }
-  .peak-row .peak-need { color: #fbbf24; font-weight: 600; }
-
-  /* Hidden stores */
-  .store-card.hidden { display: none; }
-
-  /* Empty state */
-  .empty-state {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 60px 20px;
-    color: #475569;
-    font-size: 14px;
-  }
+  .pct-label { font-size: 11px; color: #64748b; white-space: nowrap; }
+  .pct-bar-track { flex: 1; height: 5px; background: #1e2535; border-radius: 3px; overflow: hidden; }
+  .pct-bar-fill  { height: 100%; border-radius: 3px; transition: width 0.4s; }
+  .pct-good  { background: #34d399; }
+  .pct-warn  { background: #fbbf24; }
+  .pct-over  { background: #f87171; }
+  .pct-value { font-size: 12px; font-weight: 700; white-space: nowrap; min-width: 36px; text-align: right; }
+  .pct-goal  { font-size: 10px; color: #475569; white-space: nowrap; }
+  .pct-none  { font-size: 11px; color: #334155; font-style: italic; }
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <h1>Staffing Dashboard</h1>
-    <div class="subtitle">Coverage · Fill Rates · Team Composition</div>
+    <h1>GBGS Staffing Dashboard</h1>
+    <div class="subtitle">Daily Labor Costs · Games Run · Hours per Game</div>
   </div>
-  <div class="last-updated" id="lastUpdatedDisplay"></div>
+  <div class="header-right">
+    <div class="report-date" id="reportDate">—</div>
+    <div class="report-label">Report Date</div>
+  </div>
 </header>
 
-<div class="zone-tabs" id="zoneTabs"></div>
+<div class="no-adp-banner" id="adpBanner" style="display:none">
+  ⚠ ADP labor data not yet loaded for this date. Showing game counts and revenue only.
+</div>
 
+<div class="zone-tabs" id="zoneTabs"></div>
 <div class="store-grid" id="storeGrid"></div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
-// To update: replace the contents of STORE_DATA below with new values.
-// Claude can do this automatically when you share an updated ADP report.
-const STORE_DATA = [
-  {
-    region: "C",
-    storeName: "Opry Mills Mall",
-    gm: "Tati Parker",
-    lastUpdated: "2026-06-02",
-    totalStaff: 13,
-    avgWage: null,
-    mgmtCost: 123.29,
-    pctRevGoal: 18.8,
-    currentMonth: "June",
-    shiftCapacity: 275,
-    projShiftsToFill: 220,
-    coverageRatio: 1.25,
-    managers: 3,
-    tlsGels: 3,
-    hosts: null,
-    pctFT: 0.50,
-    pctPT: 0.50,
-    monthlyFill: {
-      Jan: 186, Feb: 136, Mar: 160, Apr: 176, May: 148,
-      Jun: 172, Jul: 220, Aug: 168, Sep: 148, Oct: 170, Nov: 146, Dec: 196
-    },
-    monthlyCapacity: {
-      Jan: 275, Feb: 220, Mar: 220, Apr: 275, May: 220,
-      Jun: 220, Jul: 275, Aug: 220, Sep: 220, Oct: 275, Nov: 220, Dec: 275
-    },
-    peakMonths: "Jan, Jun, Jul, Aug, Nov, Dec",
-    nextPeak: "July (wk 1)",
-    nextPeakFill: 220,
-    nextPeakShiftsNeeded: 0,
-    thinHostNow: "✓ All good",
-    thinGelNow: "✓ All good",
-    thinHostPeak: "✓ All good",
-    thinGelPeak: "✓ All good"
-  },
-  {
-    region: "C",
-    storeName: "Pigeon Forge",
-    gm: "Phillip Edwards",
-    lastUpdated: "2026-06-02",
-    totalStaff: 14,
-    avgWage: null,
-    mgmtCost: 123.29,
-    pctRevGoal: 25.0,
-    currentMonth: "June",
-    shiftCapacity: 215,
-    projShiftsToFill: 225,
-    coverageRatio: 0.96,
-    managers: 2,
-    tlsGels: 2,
-    hosts: null,
-    pctFT: 0.67,
-    pctPT: 0.33,
-    monthlyFill: {
-      Jan: 165, Feb: 108, Mar: 156, Apr: 159, May: 120,
-      Jun: 174, Jul: 225, Aug: 168, Sep: 132, Oct: 135, Nov: 126, Dec: 183
-    },
-    monthlyCapacity: {
-      Jan: 215, Feb: 172, Mar: 172, Apr: 215, May: 172,
-      Jun: 172, Jul: 215, Aug: 172, Sep: 172, Oct: 215, Nov: 172, Dec: 215
-    },
-    peakMonths: "Jan, Jun, Jul, Aug, Nov, Dec",
-    nextPeak: "July (wk 1)",
-    nextPeakFill: 225,
-    nextPeakShiftsNeeded: 55,
-    thinHostNow: "✓ All good",
-    thinGelNow: "✓ All good",
-    thinHostPeak: "✓ All good",
-    thinGelPeak: "✓ All good"
-  },
-  {
-    region: "C",
-    storeName: "St. Louis",
-    gm: "Anaiah Belk",
-    lastUpdated: "2026-06-02",
-    totalStaff: 14,
-    avgWage: 15.69,
-    mgmtCost: 136.98,
-    pctRevGoal: 20.0,
-    currentMonth: "June",
-    shiftCapacity: 225,
-    projShiftsToFill: 210,
-    coverageRatio: 1.07,
-    managers: 3,
-    tlsGels: 2,
-    hosts: null,
-    pctFT: 0.18,
-    pctPT: 0.73,
-    monthlyFill: {
-      Jan: 184, Feb: 144, Mar: 154, Apr: 178, May: 140,
-      Jun: 144, Jul: 210, Aug: 154, Sep: 142, Oct: null, Nov: null, Dec: null
-    },
-    monthlyCapacity: {
-      Jan: 225, Feb: 180, Mar: 180, Apr: 225, May: 180,
-      Jun: 180, Jul: 225, Aug: 180, Sep: 180, Oct: 225, Nov: 180, Dec: 225
-    },
-    peakMonths: "Jan, Mar, Jun, Jul, Aug, Nov, Dec",
-    nextPeak: "July (wk 1)",
-    nextPeakFill: 210,
-    nextPeakShiftsNeeded: 27,
-    thinHostNow: "✓ All good",
-    thinGelNow: "✓ All good",
-    thinHostPeak: "✓ All good",
-    thinGelPeak: "✓ All good"
-  }
+// ─── STORE DEFINITIONS ───────────────────────────────────────────────────────
+// Maps ADP code → store info including DW name for reference
+const STORES = [
+  { adp: "LUE", name: "GBGS Opry",               region: "East", status: "Mature",  mgmtCost: 123.29 },
+  { adp: "HYM", name: "GBGS The Colony",          region: "East", status: "Mature",  mgmtCost: 123.29 },
+  { adp: "AY4", name: "GBGS MOA",                 region: "West", status: "Ramping", mgmtCost: 123.29 },
+  { adp: "ZTA", name: "GBGS SF Wharf",            region: "West", status: "Ramping", mgmtCost: 123.29 },
+  { adp: "ZTP", name: "GBGS Houston",             region: "East", status: "Ramping", mgmtCost: 123.29 },
+  { adp: "ZTM", name: "GBGS Oak Brook",           region: "West", status: "Ramping", mgmtCost: 123.29 },
+  { adp: "ZZV", name: "GBGS Pigeon Forge",        region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "SKP", name: "GBGS New Jersey",          region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "ZU8", name: "GBGS Las Vegas",           region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "ASE", name: "GBGS Honolulu",            region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "VPF", name: "GBGS Georgetown",          region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "ZU9", name: "GBGS St. Louis",           region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "ZUE", name: "GBGS San Jose",            region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "MW2", name: "GBGS Seattle Downtown",    region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "LYC", name: "GBGS Seattle Southcenter", region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "DW9", name: "GBGS Times Square",        region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "QTV", name: "GBGS Las Vegas Area 15",   region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "RX8", name: "GBGS Murray",              region: "West", status: "New",     mgmtCost: 123.29 },
+  { adp: "00H", name: "GBGS Birmingham",          region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "E3G", name: "GBGS Orlando",             region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "E3Q", name: "GBGS Atlanta",             region: "East", status: "New",     mgmtCost: 123.29 },
+  { adp: "J2M", name: "GBGS Schaumburg",          region: "East", status: "New",     mgmtCost: 123.29 },
 ];
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+// ─── DATA ────────────────────────────────────────────────────────────────────
+// Updated by Claude when you upload the daily ADP report.
+// reportDate: the date this data covers (YYYY-MM-DD)
+// adpLoaded: true once ADP labor data has been parsed and merged
+// stores: keyed by ADP code
+const DATA = {
+  reportDate: "2026-06-01",
+  adpLoaded: false,
+  stores: {
+    "LUE": { games: 7,  revenue: 1759.56, laborHours: null, laborCost: null },
+    "HYM": { games: 8,  revenue: 1674.13, laborHours: null, laborCost: null },
+    "AY4": { games: 3,  revenue: 142.77,  laborHours: null, laborCost: null },
+    "ZTA": { games: 4,  revenue: 1499.28, laborHours: null, laborCost: null },
+    "ZTP": { games: 6,  revenue: 2087.46, laborHours: null, laborCost: null },
+    "ZTM": { games: 3,  revenue: 1217.39, laborHours: null, laborCost: null },
+    "ZZV": { games: 7,  revenue: 1159.61, laborHours: null, laborCost: null },
+    "SKP": { games: 10, revenue: 1306.12, laborHours: null, laborCost: null },
+    "ZU8": { games: 4,  revenue: 550.27,  laborHours: null, laborCost: null },
+    "ASE": { games: 5,  revenue: 1083.07, laborHours: null, laborCost: null },
+    "VPF": { games: 5,  revenue: 2150.68, laborHours: null, laborCost: null },
+    "ZU9": { games: 5,  revenue: 1097.93, laborHours: null, laborCost: null },
+    "ZUE": { games: 6,  revenue: 2396.49, laborHours: null, laborCost: null },
+    "MW2": { games: 7,  revenue: 2591.44, laborHours: null, laborCost: null },
+    "LYC": { games: 0,  revenue: 0,       laborHours: null, laborCost: null },
+    "DW9": { games: 10, revenue: 3310.77, laborHours: null, laborCost: null },
+    "QTV": { games: 7,  revenue: 343.92,  laborHours: null, laborCost: null },
+    "RX8": { games: 2,  revenue: 686.23,  laborHours: null, laborCost: null },
+    "00H": { games: 5,  revenue: 1687.58, laborHours: null, laborCost: null },
+    "E3G": { games: 8,  revenue: 1675.60, laborHours: null, laborCost: null },
+    "E3Q": { games: 5,  revenue: 1555.57, laborHours: null, laborCost: null },
+    "J2M": { games: 1,  revenue: 139.37,  laborHours: null, laborCost: null },
+  }
+};
 
 // ─── RENDER ──────────────────────────────────────────────────────────────────
-function coverageClass(r) {
-  if (r >= 1.1) return "coverage-good";
-  if (r >= 0.9) return "coverage-warn";
-  return "coverage-bad";
+function fmt$(n) {
+  if (n == null) return null;
+  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function alertClass(val) {
-  if (!val || val === "✓ All good") return "alert-ok";
-  if (typeof val === "string" && val.startsWith("✓")) return "alert-ok";
-  return "alert-warn";
+function fmtHrs(n) {
+  if (n == null) return null;
+  return n.toFixed(2) + ' hrs';
 }
 
-function alertIcon(val) {
-  if (!val || val === "✓ All good" || (typeof val === "string" && val.startsWith("✓"))) return "✓";
-  return "⚠";
+function pctClass(pct, goal) {
+  if (pct == null) return '';
+  const ratio = pct / goal;
+  if (ratio <= 1.05) return 'pct-good';
+  if (ratio <= 1.20) return 'pct-warn';
+  return 'pct-over';
 }
 
-function buildCard(s) {
-  const fillPct = (s.projShiftsToFill / s.shiftCapacity * 100).toFixed(0);
-  const maxCap = Math.max(...MONTHS.map(m => s.monthlyCapacity[m] || 0));
+function buildCard(store) {
+  const d = DATA.stores[store.adp] || {};
+  const games     = d.games ?? 0;
+  const revenue   = d.revenue ?? 0;
+  const laborHrs  = d.laborHours;
+  const laborCost = d.laborCost;
+  const mgmt      = store.mgmtCost;
+  const totalCost = (laborCost != null) ? laborCost + mgmt : null;
+  const hpg       = (laborHrs != null && games > 0) ? (laborHrs / games).toFixed(2) : null;
+  const laborPct  = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
 
-  const bars = MONTHS.map(m => {
-    const cap = s.monthlyCapacity[m] || 0;
-    const fill = s.monthlyFill[m];
-    const isCurrent = m === s.currentMonth.slice(0,3);
-    const fillH = fill != null ? Math.round((fill / maxCap) * 56) : 0;
-    const capH  = Math.round((cap / maxCap) * 56);
-    const pct   = fill != null ? Math.round(fill / cap * 100) : 0;
-    let color = "#334155";
-    if (fill != null) {
-      if (pct >= 90) color = "#34d399";
-      else if (pct >= 70) color = "#3b82f6";
-      else if (pct >= 50) color = "#fbbf24";
-      else color = "#f87171";
-    }
-    return `
-      <div class="fill-bar-wrap${isCurrent ? ' fill-bar-current' : ''}">
-        <div class="fill-bar-outer" style="height:${capH}px">
-          <div class="fill-bar-inner" style="height:${fillH}px;background:${color}"></div>
-        </div>
-      </div>`;
-  }).join('');
+  // status badge
+  const statusClass = `status-${store.status.toLowerCase()}`;
 
-  const monthLabels = MONTHS.map(m => {
-    const isCurrent = m === s.currentMonth.slice(0,3);
-    return `<div class="fill-month-label${isCurrent?' current':''}">${m}</div>`;
-  }).join('');
+  // KPI: Games, Revenue, Hours/Game
+  const kpiGames = `<div class="kpi">
+    <div class="kpi-label">Games Run</div>
+    <div class="kpi-value">${games}</div>
+    <div class="kpi-sub">${fmt$(revenue) ?? '—'} rev</div>
+  </div>`;
 
-  const alerts = [
-    { label: "HOST Now", val: s.thinHostNow },
-    { label: "GEL Now",  val: s.thinGelNow },
-    { label: "HOST Peak",val: s.thinHostPeak },
-    { label: "GEL Peak", val: s.thinGelPeak }
-  ].map(a => `
-    <div class="alert-chip ${alertClass(a.val)}">
-      <span>${alertIcon(a.val)}</span>
-      <span>${a.label}${a.val && !a.val.startsWith("✓") ? ': ' + a.val : ''}</span>
-    </div>`).join('');
+  const kpiHPG = laborHrs != null
+    ? `<div class="kpi">
+        <div class="kpi-label">Hrs / Game</div>
+        <div class="kpi-value">${hpg ?? '—'}</div>
+        <div class="kpi-sub">${fmtHrs(laborHrs)} total</div>
+       </div>`
+    : `<div class="kpi">
+        <div class="kpi-label">Hrs / Game</div>
+        <div class="kpi-pending">—</div>
+        <div class="kpi-sub">awaiting ADP</div>
+       </div>`;
 
-  const peakNeed = s.nextPeakShiftsNeeded > 0
-    ? `<span class="peak-need">+${s.nextPeakShiftsNeeded} shifts needed</span>`
-    : `<span style="color:#34d399">Covered ✓</span>`;
+  const kpiPct = laborPct != null
+    ? `<div class="kpi">
+        <div class="kpi-label">Labor % Rev</div>
+        <div class="kpi-value ${pctClass(laborPct, 20)}">${laborPct.toFixed(1)}%</div>
+        <div class="kpi-sub">goal ≤ 20%</div>
+       </div>`
+    : `<div class="kpi">
+        <div class="kpi-label">Labor % Rev</div>
+        <div class="kpi-pending">—</div>
+        <div class="kpi-sub">awaiting ADP</div>
+       </div>`;
 
-  const avgWageDisplay = s.avgWage ? `$${s.avgWage.toFixed(2)}/hr` : '—';
+  // Labor detail row
+  const laborRow = `
+    <div class="labor-row">
+      <div class="labor-cell">
+        <div class="labor-label">Hourly Cost</div>
+        ${laborCost != null
+          ? `<div class="labor-value">${fmt$(laborCost)}</div>`
+          : `<div class="labor-pending">—</div>`}
+      </div>
+      <div class="labor-cell">
+        <div class="labor-label">Mgmt Cost</div>
+        <div class="labor-value">${fmt$(mgmt)}</div>
+      </div>
+      <div class="labor-cell">
+        <div class="labor-label">Total Labor</div>
+        ${totalCost != null
+          ? `<div class="labor-value">${fmt$(totalCost)}</div>`
+          : `<div class="labor-pending">—</div>`}
+      </div>
+      <div class="labor-cell">
+        <div class="labor-label">Revenue</div>
+        <div class="labor-value">${fmt$(revenue) ?? '—'}</div>
+      </div>
+    </div>`;
+
+  // Labor % bar
+  let pctBar;
+  if (laborPct != null) {
+    const cls = pctClass(laborPct, 20);
+    const w = Math.min(laborPct, 60) / 60 * 100; // scale bar to 60% max
+    pctBar = `<div class="pct-row">
+      <div class="pct-label">Labor %</div>
+      <div class="pct-bar-track"><div class="pct-bar-fill ${cls}" style="width:${w}%"></div></div>
+      <div class="pct-value ${cls}">${laborPct.toFixed(1)}%</div>
+      <div class="pct-goal">/ goal 20%</div>
+    </div>`;
+  } else {
+    pctBar = `<div class="pct-row"><div class="pct-none">Upload ADP report to see labor % of revenue</div></div>`;
+  }
 
   return `
-  <div class="store-card" data-region="${s.region}">
+  <div class="store-card" data-region="${store.region}">
     <div class="card-header">
       <div>
-        <div class="store-name">${s.storeName}</div>
-        <div class="store-meta">GM: ${s.gm} · ${s.peakMonths} peak</div>
+        <div class="store-name">${store.name}</div>
+        <div class="store-region">${store.region} · ADP: ${store.adp}</div>
       </div>
-      <div class="zone-badge">Zone ${s.region}</div>
+      <div class="status-badge ${statusClass}">${store.status}</div>
     </div>
     <div class="card-body">
-
-      <div class="kpi-row">
-        <div class="kpi">
-          <div class="kpi-label">Coverage</div>
-          <div class="kpi-value ${coverageClass(s.coverageRatio)}">${s.coverageRatio.toFixed(2)}</div>
-          <div class="kpi-sub">${s.shiftCapacity} cap / ${s.projShiftsToFill} proj</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">% Rev Goal</div>
-          <div class="kpi-value">${s.pctRevGoal}%</div>
-          <div class="kpi-sub">labor target</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Avg Wage</div>
-          <div class="kpi-value" style="font-size:16px">${avgWageDisplay}</div>
-          <div class="kpi-sub">mgmt $${s.mgmtCost.toFixed(0)}/wk</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Total Staff</div>
-          <div class="kpi-value">${s.totalStaff}</div>
-          <div class="kpi-sub">${Math.round(s.pctFT*100)}% FT · ${Math.round(s.pctPT*100)}% PT</div>
-        </div>
-      </div>
-
-      <div class="staff-breakdown">
-        <div class="staff-pill">
-          <div class="pill-num">${s.managers}</div>
-          <div class="pill-label">Mgrs</div>
-        </div>
-        <div class="staff-pill">
-          <div class="pill-num">${s.tlsGels}</div>
-          <div class="pill-label">TLs/GELs</div>
-        </div>
-        <div class="staff-pill">
-          <div class="pill-num">${s.hosts ?? '—'}</div>
-          <div class="pill-label">Hosts</div>
-        </div>
-        <div class="staff-pill" style="flex:2">
-          <div style="margin-bottom:6px">
-            <div class="ft-pt-label-row">
-              <span>${Math.round(s.pctFT*100)}% FT</span>
-              <span>${Math.round(s.pctPT*100)}% PT</span>
-            </div>
-            <div class="bar-track">
-              <div class="bar-fill-ft" style="width:${s.pctFT*100}%"></div>
-            </div>
-          </div>
-          <div class="pill-label">FT / PT Mix</div>
-        </div>
-      </div>
-
-      <div class="section-label">Monthly Fill vs Capacity</div>
-      <div class="fill-chart">${bars}</div>
-      <div class="fill-month-labels">${monthLabels}</div>
-
-      <div class="alerts-row">${alerts}</div>
-
-      <div class="peak-row">
-        <div>
-          <span class="peak-label">Next peak: </span>
-          <span class="peak-val">${s.nextPeak}</span>
-          <span class="peak-label"> · need ${s.nextPeakFill} fills</span>
-        </div>
-        ${peakNeed}
-      </div>
-
+      <div class="kpi-grid">${kpiGames}${kpiHPG}${kpiPct}</div>
+      ${laborRow}
+      ${pctBar}
     </div>
   </div>`;
 }
 
-function getZones() {
-  const zones = [...new Set(STORE_DATA.map(s => s.region))].sort();
-  return zones;
-}
-
-function render(activeZone = "all") {
-  const grid = document.getElementById("storeGrid");
-  const filtered = activeZone === "all"
-    ? STORE_DATA
-    : STORE_DATA.filter(s => s.region === activeZone);
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state">No stores in this zone yet.</div>';
-    return;
-  }
-  grid.innerHTML = filtered.map(buildCard).join('');
-
-  // Last updated
-  const dates = filtered.map(s => s.lastUpdated).filter(Boolean).sort().reverse();
-  if (dates.length) {
-    document.getElementById("lastUpdatedDisplay").innerHTML =
-      `Last updated<br><strong>${dates[0]}</strong>`;
-  }
-}
-
 function buildTabs() {
+  const regions = ["All", ...new Set(STORES.map(s => s.region))].sort((a, b) => a === "All" ? -1 : 0);
   const tabs = document.getElementById("zoneTabs");
-  const zones = getZones();
-  let html = `<button class="zone-tab active" data-zone="all">All Zones</button>`;
-  zones.forEach(z => {
-    const count = STORE_DATA.filter(s => s.region === z).length;
-    html += `<button class="zone-tab" data-zone="${z}">Zone ${z} <span style="opacity:.5">${count}</span></button>`;
-  });
-  tabs.innerHTML = html;
-
+  tabs.innerHTML = regions.map((r, i) =>
+    `<button class="zone-tab${i===0?' active':''}" data-region="${r}">${r}</button>`
+  ).join('');
   tabs.addEventListener("click", e => {
     const btn = e.target.closest(".zone-tab");
     if (!btn) return;
     document.querySelectorAll(".zone-tab").forEach(t => t.classList.remove("active"));
     btn.classList.add("active");
-    render(btn.dataset.zone);
+    renderGrid(btn.dataset.region);
   });
 }
 
+function renderGrid(region = "All") {
+  const filtered = region === "All" ? STORES : STORES.filter(s => s.region === region);
+  document.getElementById("storeGrid").innerHTML = filtered.map(buildCard).join('');
+}
+
+// Banner & date
+document.getElementById("reportDate").textContent = DATA.reportDate;
+if (!DATA.adpLoaded) document.getElementById("adpBanner").style.display = "flex";
+
 buildTabs();
-render();
+renderGrid();
 </script>
 </body>
 </html>
