@@ -268,7 +268,7 @@ const STORES = [
   { adp: "DW9", name: "GBGS Times Square",        zone: "A", status: "New",     mgmtCost: 197.25, laborPctGoal: 20.00 },
   { adp: "00H", name: "GBGS Birmingham",          zone: "A", status: "New",     mgmtCost: 143.83, laborPctGoal: 28.00 },
   { adp: "E3G", name: "GBGS Orlando",             zone: "A", status: "New",     mgmtCost: 136.99, laborPctGoal: 35.00 },
-  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", status: "New",     mgmtCost:    null, laborPctGoal: 50.00 },
+  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", status: "New",     mgmtCost:  136.99, laborPctGoal: 50.00 },
   // Zone B
   { adp: "AY4", name: "GBGS MOA",                 zone: "B", status: "Ramping", mgmtCost: 150.68, laborPctGoal: 29.87 },
   { adp: "ZTA", name: "GBGS SF Wharf",            zone: "B", status: "Ramping", mgmtCost:   0.00, laborPctGoal: 39.39 },
@@ -526,9 +526,9 @@ function buildCard(store) {
   const revenue   = d.revenue ?? 0;
   const laborHrs  = d.laborHours;
   const laborCost = d.laborCost;
-  // Prorate mgmt cost (weekly rate × weeks in period)
+  // Mgmt cost is a daily rate — multiply by period length
   const periodDays = window.__activePeriodDays ?? 1;
-  const mgmt = store.mgmtCost != null ? store.mgmtCost / 7 * periodDays : null;
+  const mgmt = store.mgmtCost != null ? store.mgmtCost * periodDays : null;
   const totalCost = (laborCost != null) ? laborCost + mgmt : null;
   const hpg       = (laborHrs != null && games > 0) ? (laborHrs / games).toFixed(2) : null;
   const laborPct  = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
