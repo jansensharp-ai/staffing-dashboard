@@ -29,9 +29,32 @@
   header h1 { font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
   header .subtitle { font-size: 13px; color: #64748b; margin-top: 3px; }
 
-  .header-right { text-align: right; }
+  .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
   .report-date { font-size: 22px; font-weight: 700; color: #f1f5f9; }
   .report-label { font-size: 11px; color: #475569; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Toggle */
+  .view-toggle {
+    display: flex;
+    background: #0f1117;
+    border: 1px solid #1e2535;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .toggle-btn {
+    padding: 5px 16px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .toggle-btn.active { background: #1e2535; color: #f1f5f9; }
+  .toggle-btn:hover:not(.active) { color: #94a3b8; }
 
   .no-adp-banner {
     background: #1c1a10;
@@ -176,8 +199,14 @@
     <div class="subtitle">Daily Labor Costs · Games Run · Hours per Game</div>
   </div>
   <div class="header-right">
-    <div class="report-date" id="reportDate">—</div>
-    <div class="report-label">Report Date</div>
+    <div class="view-toggle">
+      <button class="toggle-btn active" data-view="daily">Daily</button>
+      <button class="toggle-btn" data-view="mtd">MTD</button>
+    </div>
+    <div>
+      <div class="report-date" id="reportDate">—</div>
+      <div class="report-label" id="reportLabel">Report Date</div>
+    </div>
   </div>
 </header>
 
@@ -220,38 +249,122 @@ const STORES = [
 ];
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
-// Updated by Claude when you upload the daily ADP report.
-// reportDate: the date this data covers (YYYY-MM-DD)
-// adpLoaded: true once ADP labor data has been parsed and merged
-// stores: keyed by ADP code
+// history: one entry per uploaded ADP report day (Claude appends on each update)
+// mtdDW: cumulative game counts + revenue from the data warehouse (always accurate)
 const DATA = {
-  reportDate: "2026-06-02",
-  adpLoaded: true,
-  stores: {
-    "LUE": { games: 6,  revenue: 640.84,   laborHours: 47.08, laborCost: 638.43  },
-    "ZZV": { games: 9,  revenue: 1799.46,  laborHours: 23.44, laborCost: 365.58  },
-    "ZU9": { games: 5,  revenue: 1924.23,  laborHours: 26.90, laborCost: 428.47  },
-    "HYM": { games: 8,  revenue: 3184.92,  laborHours: 42.62, laborCost: 687.63  },
-    "ZTP": { games: 6,  revenue: 1417.65,  laborHours: 59.17, laborCost: 820.52  },
-    "VPF": { games: 8,  revenue: 3788.03,  laborHours: 37.03, laborCost: 687.97  },
-    "SKP": { games: 10, revenue: 1087.65,  laborHours: 53.18, laborCost: 965.81  },
-    "DW9": { games: 12, revenue: 4299.59,  laborHours: 70.56, laborCost: 1260.12 },
-    "00H": { games: 6,  revenue: 1527.61,  laborHours: 35.48, laborCost: 460.85  },
-    "E3G": { games: 3,  revenue: 839.79,   laborHours: 43.55, laborCost: 561.48  },
-    "E3Q": { games: 7,  revenue: 2217.06,  laborHours: 49.09, laborCost: 810.48  },
-    "AY4": { games: 3,  revenue: 545.87,   laborHours: 62.86, laborCost: 834.51  },
-    "ZTA": { games: 2,  revenue: 781.83,   laborHours: 21.60, laborCost: 425.09  },
-    "ZTM": { games: 6,  revenue: 2758.62,  laborHours: 98.77, laborCost: 1583.54 },
-    "ZU8": { games: 5,  revenue: 1066.15,  laborHours: 39.98, laborCost: 469.27  },
-    "ASE": { games: 6,  revenue: 2225.92,  laborHours: 19.83, laborCost: 347.09  },
-    "ZUE": { games: 5,  revenue: 1983.91,  laborHours: 31.46, laborCost: 602.33  },
-    "QTV": { games: 9,  revenue: 1349.88,  laborHours: 38.19, laborCost: 555.79  },
-    "RX8": { games: 2,  revenue: 565.35,   laborHours: 20.33, laborCost: 162.68  },
-    "J2M": { games: 3,  revenue: 1135.42,  laborHours: 52.84, laborCost: 799.15  },
-    "LYC": { games: 5,  revenue: 1736.65,  laborHours: 29.65, laborCost: 676.22  },
-    "MW2": { games: 6,  revenue: 1601.65,  laborHours: 25.18, laborCost: 563.07  },
+  month: "June 2026",
+  history: [
+    {
+      date: "2026-06-01",
+      stores: {
+        "LUE": { games: 7,  revenue: 1759.56, laborHours: 36.88, laborCost: 405.39  },
+        "ZZV": { games: 7,  revenue: 1159.61, laborHours: 35.45, laborCost: 459.43  },
+        "ZU9": { games: 5,  revenue: 1097.93, laborHours: 37.79, laborCost: 434.94  },
+        "HYM": { games: 8,  revenue: 1674.13, laborHours: 38.96, laborCost: 636.35  },
+        "ZTP": { games: 6,  revenue: 2087.46, laborHours: 49.99, laborCost: 669.70  },
+        "VPF": { games: 5,  revenue: 2150.68, laborHours: 24.45, laborCost: 443.04  },
+        "SKP": { games: 10, revenue: 1306.12, laborHours: 56.03, laborCost: 1023.25 },
+        "DW9": { games: 10, revenue: 3310.77, laborHours: 42.42, laborCost: 772.22  },
+        "00H": { games: 5,  revenue: 1687.58, laborHours: 39.44, laborCost: 467.03  },
+        "E3G": { games: 8,  revenue: 1675.60, laborHours: 53.33, laborCost: 707.86  },
+        "E3Q": { games: 5,  revenue: 1555.57, laborHours: 53.51, laborCost: 727.71  },
+        "AY4": { games: 3,  revenue: 142.77,  laborHours: 56.29, laborCost: 642.69  },
+        "ZTA": { games: 4,  revenue: 1499.28, laborHours: 21.92, laborCost: 458.50  },
+        "ZTM": { games: 3,  revenue: 1217.39, laborHours: 81.49, laborCost: 1110.90 },
+        "ZU8": { games: 4,  revenue: 550.27,  laborHours: 37.86, laborCost: 418.07  },
+        "ASE": { games: 5,  revenue: 1083.07, laborHours: 26.18, laborCost: 466.79  },
+        "ZUE": { games: 6,  revenue: 2396.49, laborHours: 52.04, laborCost: 868.76  },
+        "QTV": { games: 7,  revenue: 343.92,  laborHours: 41.89, laborCost: 646.10  },
+        "RX8": { games: 2,  revenue: 686.23,  laborHours: 20.12, laborCost: 161.88  },
+        "J2M": { games: 1,  revenue: 139.37,  laborHours: 54.61, laborCost: 903.58  },
+        "LYC": { games: 0,  revenue: 0,       laborHours: 23.73, laborCost: 545.04  },
+        "MW2": { games: 7,  revenue: 2591.44, laborHours: 35.21, laborCost: 798.18  },
+      }
+    },
+    {
+      date: "2026-06-02",
+      stores: {
+        "LUE": { games: 6,  revenue: 640.84,  laborHours: 47.08, laborCost: 638.43  },
+        "ZZV": { games: 9,  revenue: 1799.46, laborHours: 23.44, laborCost: 365.58  },
+        "ZU9": { games: 5,  revenue: 1924.23, laborHours: 26.90, laborCost: 428.47  },
+        "HYM": { games: 8,  revenue: 3184.92, laborHours: 42.62, laborCost: 687.63  },
+        "ZTP": { games: 6,  revenue: 1417.65, laborHours: 59.17, laborCost: 820.52  },
+        "VPF": { games: 8,  revenue: 3788.03, laborHours: 37.03, laborCost: 687.97  },
+        "SKP": { games: 10, revenue: 1087.65, laborHours: 53.18, laborCost: 965.81  },
+        "DW9": { games: 12, revenue: 4299.59, laborHours: 70.56, laborCost: 1260.12 },
+        "00H": { games: 6,  revenue: 1527.61, laborHours: 35.48, laborCost: 460.85  },
+        "E3G": { games: 3,  revenue: 839.79,  laborHours: 43.55, laborCost: 561.48  },
+        "E3Q": { games: 7,  revenue: 2217.06, laborHours: 49.09, laborCost: 810.48  },
+        "AY4": { games: 3,  revenue: 545.87,  laborHours: 62.86, laborCost: 834.51  },
+        "ZTA": { games: 2,  revenue: 781.83,  laborHours: 21.60, laborCost: 425.09  },
+        "ZTM": { games: 6,  revenue: 2758.62, laborHours: 98.77, laborCost: 1583.54 },
+        "ZU8": { games: 5,  revenue: 1066.15, laborHours: 39.98, laborCost: 469.27  },
+        "ASE": { games: 6,  revenue: 2225.92, laborHours: 19.83, laborCost: 347.09  },
+        "ZUE": { games: 5,  revenue: 1983.91, laborHours: 31.46, laborCost: 602.33  },
+        "QTV": { games: 9,  revenue: 1349.88, laborHours: 38.19, laborCost: 555.79  },
+        "RX8": { games: 2,  revenue: 565.35,  laborHours: 20.33, laborCost: 162.68  },
+        "J2M": { games: 3,  revenue: 1135.42, laborHours: 52.84, laborCost: 799.15  },
+        "LYC": { games: 5,  revenue: 1736.65, laborHours: 29.65, laborCost: 676.22  },
+        "MW2": { games: 6,  revenue: 1601.65, laborHours: 25.18, laborCost: 563.07  },
+      }
+    }
+  ],
+  // DW-sourced MTD totals — games and revenue are always accurate here
+  mtdDW: {
+    "LUE": { games: 13, revenue: 2400.40  },
+    "ZZV": { games: 16, revenue: 2959.07  },
+    "ZU9": { games: 10, revenue: 3022.16  },
+    "HYM": { games: 16, revenue: 4859.05  },
+    "ZTP": { games: 12, revenue: 3505.11  },
+    "VPF": { games: 13, revenue: 5938.71  },
+    "SKP": { games: 20, revenue: 2393.77  },
+    "DW9": { games: 22, revenue: 7610.36  },
+    "00H": { games: 11, revenue: 3215.19  },
+    "E3G": { games: 11, revenue: 2515.39  },
+    "E3Q": { games: 12, revenue: 3772.63  },
+    "AY4": { games: 6,  revenue: 688.64   },
+    "ZTA": { games: 6,  revenue: 2281.11  },
+    "ZTM": { games: 9,  revenue: 3976.01  },
+    "ZU8": { games: 9,  revenue: 1616.42  },
+    "ASE": { games: 11, revenue: 3308.99  },
+    "ZUE": { games: 11, revenue: 4380.40  },
+    "QTV": { games: 16, revenue: 1693.80  },
+    "RX8": { games: 4,  revenue: 1251.58  },
+    "J2M": { games: 4,  revenue: 1274.79  },
+    "LYC": { games: 5,  revenue: 1736.65  },
+    "MW2": { games: 13, revenue: 4193.09  },
   }
 };
+
+// ─── DATA HELPERS ────────────────────────────────────────────────────────────
+function getDailyData() {
+  const last = DATA.history[DATA.history.length - 1];
+  return { date: last.date, stores: last.stores };
+}
+
+function getMTDData() {
+  // Labor hours + cost: sum from all history days
+  const labor = {};
+  for (const day of DATA.history) {
+    for (const [code, s] of Object.entries(day.stores)) {
+      if (!labor[code]) labor[code] = { laborHours: 0, laborCost: 0 };
+      labor[code].laborHours += s.laborHours || 0;
+      labor[code].laborCost  += s.laborCost  || 0;
+    }
+  }
+  // Games + revenue: use authoritative DW totals
+  const stores = {};
+  for (const code of Object.keys(DATA.mtdDW)) {
+    stores[code] = {
+      games:      DATA.mtdDW[code].games,
+      revenue:    DATA.mtdDW[code].revenue,
+      laborHours: labor[code]?.laborHours ?? null,
+      laborCost:  labor[code]?.laborCost  ?? null,
+    };
+  }
+  const dates = DATA.history.map(d => d.date);
+  return { date: `${dates[0]} – ${dates[dates.length-1]}`, stores };
+}
 
 // ─── RENDER ──────────────────────────────────────────────────────────────────
 function fmt$(n) {
@@ -281,7 +394,7 @@ function kpiBgClass(pct, goal) {
 }
 
 function buildCard(store) {
-  const d = DATA.stores[store.adp] || {};
+  const d = (window.__activeStores || {})[store.adp] || {};
   const games     = d.games ?? 0;
   const revenue   = d.revenue ?? 0;
   const laborHrs  = d.laborHours;
@@ -432,7 +545,8 @@ function buildTabs() {
     if (!btn) return;
     document.querySelectorAll(".zone-tab").forEach(t => t.classList.remove("active"));
     btn.classList.add("active");
-    renderGrid(btn.dataset.zone);
+    currentZone = btn.dataset.zone;
+    renderGrid(currentZone);
   });
 }
 
@@ -441,12 +555,32 @@ function renderGrid(zone = "All") {
   document.getElementById("storeGrid").innerHTML = filtered.map(buildCard).join('');
 }
 
-// Banner & date
-document.getElementById("reportDate").textContent = DATA.reportDate;
-if (!DATA.adpLoaded) document.getElementById("adpBanner").style.display = "flex";
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+let currentView = "daily";
+let currentZone = "All";
+
+function applyView() {
+  const d = currentView === "daily" ? getDailyData() : getMTDData();
+  document.getElementById("reportDate").textContent = d.date;
+  document.getElementById("reportLabel").textContent =
+    currentView === "daily" ? "Report Date" : `MTD · ${DATA.month}`;
+  // patch global store lookup used by buildCard
+  window.__activeStores = d.stores;
+  renderGrid(currentZone);
+}
+
+// Toggle
+document.querySelector(".view-toggle").addEventListener("click", e => {
+  const btn = e.target.closest(".toggle-btn");
+  if (!btn) return;
+  document.querySelectorAll(".toggle-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  currentView = btn.dataset.view;
+  applyView();
+});
 
 buildTabs();
-renderGrid("All");
+applyView();
 </script>
 </body>
 </html>
