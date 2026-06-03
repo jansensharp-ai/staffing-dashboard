@@ -228,6 +228,9 @@
       <div class="view-toggle">
         <button class="toggle-btn active" data-view="daily">Daily</button>
         <button class="toggle-btn" data-view="mtd">MTD</button>
+        <button class="toggle-btn" data-view="tq">Trailing Qtr</button>
+        <button class="toggle-btn" data-view="ytd">YTD</button>
+        <button class="toggle-btn" data-view="py">PY</button>
       </div>
       <div class="date-nav" id="dateNav">
         <button class="date-nav-btn" id="datePrev">&#8592;</button>
@@ -341,6 +344,91 @@ const DATA = {
       }
     }
   ],
+  // Snowflake-sourced historical periods (labor = hourly only, mgmt added in JS)
+  // YTD: 2026-01-01 to 2026-06-02 (153 days)
+  ytd: {
+    label: "YTD 2026", days: 153,
+    stores: {
+      "LUE": { games: 1536, revenue: 477556.90, laborHours: 6529.72,  laborCost: 89937.05  },
+      "ZZV": { games: 1087, revenue: 256267.73, laborHours: 4498.85,  laborCost: 55135.71  },
+      "ZU9": { games: 1118, revenue: 337907.65, laborHours: 5166.00,  laborCost: 66179.71  },
+      "HYM": { games: 1842, revenue: 610441.40, laborHours: 7432.30,  laborCost: 105817.47 },
+      "ZTP": { games: 1287, revenue: 395789.62, laborHours: 6532.93,  laborCost: 90647.24  },
+      "VPF": { games: 1555, revenue: 589182.23, laborHours: 6990.73,  laborCost: 125444.19 },
+      "SKP": { games: 1958, revenue: 648005.54, laborHours: 8859.63,  laborCost: 131576.91 },
+      "DW9": { games: 2121, revenue: 809889.10, laborHours: 9546.82,  laborCost: 146799.61 },
+      "00H": { games: 812,  revenue: 239242.16, laborHours: 5220.90,  laborCost: 63020.40  },
+      "E3G": { games: 616,  revenue: 155834.28, laborHours: 4427.80,  laborCost: 69234.37  },
+      "E3Q": { games: 272,  revenue: 56746.90,  laborHours: 2854.77,  laborCost: 36974.87  },
+      "AY4": { games: 1014, revenue: 242472.12, laborHours: 5517.58,  laborCost: 73997.21  },
+      "ZTA": { games: 688,  revenue: 214574.01, laborHours: 3533.08,  laborCost: 66181.28  },
+      "ZTM": { games: 2111, revenue: 779560.25, laborHours: 9032.40,  laborCost: 116778.22 },
+      "ZU8": { games: 1148, revenue: 299006.64, laborHours: 5417.87,  laborCost: 67143.37  },
+      "ASE": { games: 939,  revenue: 287229.55, laborHours: 4415.42,  laborCost: 76767.75  },
+      "ZUE": { games: 1738, revenue: 595427.32, laborHours: 6220.47,  laborCost: 103404.13 },
+      "QTV": { games: 1321, revenue: 259049.17, laborHours: 5803.37,  laborCost: 71787.23  },
+      "RX8": { games: 515,  revenue: 117211.60, laborHours: 4677.85,  laborCost: 55806.19  },
+      "J2M": { games: 340,  revenue: 65337.19,  laborHours: 3670.15,  laborCost: 48870.25  },
+      "LYC": { games: 898,  revenue: 329285.82, laborHours: 5430.83,  laborCost: 102163.49 },
+      "MW2": { games: 1104, revenue: 435922.47, laborHours: 4904.87,  laborCost: 108025.84 },
+    }
+  },
+  // PY: 2025-01-01 to 2025-06-02 (same period prior year)
+  py: {
+    label: "PY (Jan–Jun 2025)", days: 153,
+    stores: {
+      "LUE": { games: 1491, revenue: 421264.44, laborHours: 3587.17,  laborCost: 46989.05  },
+      "ZZV": { games: 742,  revenue: 139479.48, laborHours: 2025.83,  laborCost: 21907.53  },
+      "ZU9": { games: 168,  revenue: 14211.36,  laborHours: 866.22,   laborCost: 7578.75   },
+      "HYM": { games: 2045, revenue: 644965.89, laborHours: 2643.13,  laborCost: 46003.12  },
+      "ZTP": { games: 1233, revenue: 340671.40, laborHours: 3636.75,  laborCost: 63652.18  },
+      "VPF": { games: 971,  revenue: 365917.84, laborHours: 2897.08,  laborCost: 53058.63  },
+      "SKP": { games: 384,  revenue: 90528.56,  laborHours: 2569.62,  laborCost: 31920.52  },
+      "DW9": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "00H": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "E3G": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "E3Q": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "AY4": { games: 31,   revenue: 7420.78,   laborHours: 40.43,    laborCost: 712.57    },
+      "ZTA": { games: 306,  revenue: 101599.41, laborHours: 521.02,   laborCost: 9743.01   },
+      "ZTM": { games: 1891, revenue: 640219.61, laborHours: 7346.73,  laborCost: 104699.83 },
+      "ZU8": { games: 570,  revenue: 98049.81,  laborHours: 1628.27,  laborCost: 14029.40  },
+      "ASE": { games: 194,  revenue: 45038.93,  laborHours: 1501.13,  laborCost: 26225.03  },
+      "ZUE": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "QTV": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "RX8": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "J2M": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "LYC": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+      "MW2": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
+    }
+  },
+  // Trailing Quarter: 2026-03-04 to 2026-06-02 (90 days)
+  tq: {
+    label: "Trailing Qtr (Mar 4 – Jun 2)", days: 90,
+    stores: {
+      "LUE": { games: 1018, revenue: 307339.28, laborHours: 4002.52,  laborCost: 55040.55  },
+      "ZZV": { games: 753,  revenue: 168455.87, laborHours: 2782.08,  laborCost: 34790.93  },
+      "ZU9": { games: 666,  revenue: 191002.12, laborHours: 3236.07,  laborCost: 41804.29  },
+      "HYM": { games: 1176, revenue: 376474.71, laborHours: 4482.35,  laborCost: 64217.27  },
+      "ZTP": { games: 828,  revenue: 256191.42, laborHours: 3913.42,  laborCost: 53725.57  },
+      "VPF": { games: 964,  revenue: 350695.16, laborHours: 4290.87,  laborCost: 76612.93  },
+      "SKP": { games: 1219, revenue: 370020.90, laborHours: 5644.37,  laborCost: 87855.60  },
+      "DW9": { games: 1363, revenue: 536096.04, laborHours: 6082.42,  laborCost: 93273.64  },
+      "00H": { games: 776,  revenue: 235970.98, laborHours: 3962.67,  laborCost: 50369.90  },
+      "E3G": { games: 616,  revenue: 155834.28, laborHours: 4367.65,  laborCost: 68129.22  },
+      "E3Q": { games: 272,  revenue: 56746.90,  laborHours: 2854.77,  laborCost: 36974.87  },
+      "AY4": { games: 625,  revenue: 134616.36, laborHours: 3486.12,  laborCost: 46518.37  },
+      "ZTA": { games: 399,  revenue: 128263.89, laborHours: 2086.78,  laborCost: 38783.70  },
+      "ZTM": { games: 1242, revenue: 449193.36, laborHours: 5399.83,  laborCost: 72394.62  },
+      "ZU8": { games: 660,  revenue: 161138.01, laborHours: 3210.33,  laborCost: 41083.32  },
+      "ASE": { games: 551,  revenue: 171536.07, laborHours: 2648.13,  laborCost: 45369.60  },
+      "ZUE": { games: 1040, revenue: 356580.94, laborHours: 3776.27,  laborCost: 65169.12  },
+      "QTV": { games: 817,  revenue: 157555.92, laborHours: 3537.52,  laborCost: 44235.90  },
+      "RX8": { games: 344,  revenue: 83637.06,  laborHours: 2543.47,  laborCost: 30143.71  },
+      "J2M": { games: 340,  revenue: 65337.19,  laborHours: 3582.13,  laborCost: 48081.25  },
+      "LYC": { games: 498,  revenue: 181076.47, laborHours: 2998.55,  laborCost: 56787.29  },
+      "MW2": { games: 669,  revenue: 262086.78, laborHours: 2952.12,  laborCost: 65302.00  },
+    }
+  },
   // DW-sourced MTD totals — games and revenue are always accurate here
   mtdDW: {
     "LUE": { games: 13, revenue: 2400.40  },
@@ -375,7 +463,6 @@ function getDailyData() {
 }
 
 function getMTDData() {
-  // Labor hours + cost: sum from all history days
   const labor = {};
   for (const day of DATA.history) {
     for (const [code, s] of Object.entries(day.stores)) {
@@ -384,7 +471,6 @@ function getMTDData() {
       labor[code].laborCost  += s.laborCost  || 0;
     }
   }
-  // Games + revenue: use authoritative DW totals
   const stores = {};
   for (const code of Object.keys(DATA.mtdDW)) {
     stores[code] = {
@@ -395,7 +481,16 @@ function getMTDData() {
     };
   }
   const dates = DATA.history.map(d => d.date);
-  return { date: `${dates[0]} – ${dates[dates.length-1]}`, stores };
+  return { date: `${dates[0]} – ${dates[dates.length-1]}`, stores, days: dates.length };
+}
+
+function getSnowflakeData(key) {
+  const src = DATA[key];
+  const stores = {};
+  for (const [code, s] of Object.entries(src.stores)) {
+    stores[code] = { ...s };
+  }
+  return { date: src.label, stores, days: src.days };
 }
 
 // ─── RENDER ──────────────────────────────────────────────────────────────────
@@ -431,7 +526,9 @@ function buildCard(store) {
   const revenue   = d.revenue ?? 0;
   const laborHrs  = d.laborHours;
   const laborCost = d.laborCost;
-  const mgmt      = store.mgmtCost;
+  // Prorate mgmt cost (weekly rate × weeks in period)
+  const periodDays = window.__activePeriodDays ?? 1;
+  const mgmt = store.mgmtCost != null ? store.mgmtCost / 7 * periodDays : null;
   const totalCost = (laborCost != null) ? laborCost + mgmt : null;
   const hpg       = (laborHrs != null && games > 0) ? (laborHrs / games).toFixed(2) : null;
   const laborPct  = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
@@ -594,7 +691,7 @@ let currentDayIndex = DATA.history.length - 1; // start on most recent
 
 function getDailyData() {
   const day = DATA.history[currentDayIndex];
-  return { date: day.date, stores: day.stores };
+  return { date: day.date, stores: day.stores, days: 1 };
 }
 
 function updateDateNav() {
@@ -609,11 +706,16 @@ function updateDateNav() {
 }
 
 function applyView() {
-  const d = currentView === "daily" ? getDailyData() : getMTDData();
+  let d;
+  if      (currentView === "daily") d = getDailyData();
+  else if (currentView === "mtd")   d = getMTDData();
+  else                               d = getSnowflakeData(currentView);
+
+  const labels = { daily: "Report Date", mtd: `MTD · ${DATA.month}`, tq: "Trailing Quarter", ytd: "Year to Date", py: "Prior Year" };
   document.getElementById("reportDate").textContent = d.date;
-  document.getElementById("reportLabel").textContent =
-    currentView === "daily" ? "Report Date" : `MTD · ${DATA.month}`;
-  window.__activeStores = d.stores;
+  document.getElementById("reportLabel").textContent = labels[currentView];
+  window.__activeStores     = d.stores;
+  window.__activePeriodDays = d.days ?? 1;
   updateDateNav();
   renderGrid(currentZone);
 }
