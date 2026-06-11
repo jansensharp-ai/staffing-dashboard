@@ -611,29 +611,55 @@ const DATA = {
       "MW2": { games: 677,  revenue: 266077.90, laborHours: 2973.79,  laborCost: 65781.92  },
     }
   },
+  // DW game counts for MTD (used for Hrs/Game calculation)
   mtdDW: {
-    "LUE": { games: 97,  revenue: 25213.86 },
-    "ZZV": { games: 81,  revenue: 16836.11 },
-    "ZU9": { games: 62,  revenue: 15106.77 },
-    "HYM": { games: 128, revenue: 36686.80 },
-    "ZTP": { games: 80,  revenue: 25896.90 },
-    "VPF": { games: 90,  revenue: 35939.03 },
-    "SKP": { games: 111, revenue: 24148.89 },
-    "DW9": { games: 125, revenue: 45534.41 },
-    "00H": { games: 83,  revenue: 25883.34 },
-    "E3G": { games: 76,  revenue: 21525.56 },
-    "E3Q": { games: 106, revenue: 29281.26 },
-    "AY4": { games: 59,  revenue: 13264.62 },
-    "ZTA": { games: 53,  revenue: 16781.51 },
-    "ZTM": { games: 114, revenue: 39902.83 },
-    "ZU8": { games: 67,  revenue: 12774.52 },
-    "ASE": { games: 70,  revenue: 18025.25 },
-    "ZUE": { games: 105, revenue: 32220.82 },
-    "QTV": { games: 99,  revenue: 10971.39 },
-    "RX8": { games: 32,  revenue: 6903.29  },
-    "J2M": { games: 41,  revenue: 11054.51 },
-    "LYC": { games: 56,  revenue: 19495.30 },
-    "MW2": { games: 65,  revenue: 27473.64 },
+    "LUE": { games: 97  },
+    "ZZV": { games: 81  },
+    "ZU9": { games: 62  },
+    "HYM": { games: 128 },
+    "ZTP": { games: 80  },
+    "VPF": { games: 90  },
+    "SKP": { games: 111 },
+    "DW9": { games: 125 },
+    "00H": { games: 83  },
+    "E3G": { games: 76  },
+    "E3Q": { games: 106 },
+    "AY4": { games: 59  },
+    "ZTA": { games: 53  },
+    "ZTM": { games: 114 },
+    "ZU8": { games: 67  },
+    "ASE": { games: 70  },
+    "ZUE": { games: 105 },
+    "QTV": { games: 99  },
+    "RX8": { games: 32  },
+    "J2M": { games: 41  },
+    "LYC": { games: 56  },
+    "MW2": { games: 65  },
+  },
+  // MTD actuals from Forecast & Actuals CSV — source of truth for revenue and labor cost
+  mtdCSV: {
+    "LUE": { revenue: 26257, laborCost: 5623 },
+    "HYM": { revenue: 38264, laborCost: 6248 },
+    "AY4": { revenue: 16060, laborCost: 7030 },
+    "ZTA": { revenue: 18810, laborCost: 4926 },
+    "ZTP": { revenue: 25721, laborCost: 6303 },
+    "ZTM": { revenue: 44460, laborCost: 8317 },
+    "ZZV": { revenue: 18768, laborCost: 4747 },
+    "VPF": { revenue: 37234, laborCost: 5502 },
+    "ZU8": { revenue: 14753, laborCost: 3183 },
+    "SKP": { revenue: 28480, laborCost: 8908 },
+    "ASE": { revenue: 21540, laborCost: 4764 },
+    "ZU9": { revenue: 16114, laborCost: 4460 },
+    "ZUE": { revenue: 34193, laborCost: 8572 },
+    "LYC": { revenue: 20160, laborCost: 3842 },
+    "MW2": { revenue: 28553, laborCost: 5888 },
+    "DW9": { revenue: 45957, laborCost: 9598 },
+    "QTV": { revenue: 21802, laborCost: 4117 },
+    "RX8": { revenue:  7956, laborCost: 2887 },
+    "00H": { revenue: 26643, laborCost: 4830 },
+    "E3G": { revenue: 22245, laborCost: 5878 },
+    "J2M": { revenue: 11695, laborCost: 6029 },
+    "E3Q": { revenue: 30962, laborCost: 7248 },
   }
 };
 
@@ -648,21 +674,21 @@ function getDailyData() {
 }
 
 function getMTDData() {
-  const labor = {};
+  // Sum labor hours from daily ADP history (for Hrs/Game)
+  const laborHours = {};
   for (const day of DATA.history) {
     for (const [code, s] of Object.entries(day.stores)) {
-      if (!labor[code]) labor[code] = { laborHours: 0, laborCost: 0 };
-      labor[code].laborHours += s.laborHours || 0;
-      labor[code].laborCost  += s.laborCost  || 0;
+      laborHours[code] = (laborHours[code] || 0) + (s.laborHours || 0);
     }
   }
   const stores = {};
-  for (const code of Object.keys(DATA.mtdDW)) {
+  for (const code of Object.keys(DATA.mtdCSV)) {
     stores[code] = {
-      games:      DATA.mtdDW[code].games,
-      revenue:    DATA.mtdDW[code].revenue,
-      laborHours: labor[code]?.laborHours ?? null,
-      laborCost:  labor[code]?.laborCost  ?? null,
+      games:          DATA.mtdDW[code]?.games ?? 0,
+      revenue:        DATA.mtdCSV[code].revenue,
+      laborHours:     laborHours[code] ?? null,
+      laborCost:      DATA.mtdCSV[code].laborCost,
+      mgmtIncluded:   true,  // total cost already includes mgmt — don't add again
     };
   }
   const dates = DATA.history.map(d => d.date);
@@ -686,7 +712,7 @@ function buildCard(store) {
   const laborHrs  = d.laborHours;
   const laborCost = d.laborCost;
   const periodDays = window.__activePeriodDays ?? 1;
-  const mgmt = store.mgmtCost != null ? store.mgmtCost * periodDays : 0;
+  const mgmt = d.mgmtIncluded ? 0 : (store.mgmtCost != null ? store.mgmtCost * periodDays : 0);
   const totalCost = laborCost != null ? laborCost + mgmt : null;
   const hpg = (laborHrs != null && games > 0) ? (laborHrs / games) : null;
   const laborPct = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
