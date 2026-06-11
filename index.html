@@ -317,7 +317,8 @@ const STORES = [
 ];
 
 // ─── LAUNCH DETECTION ────────────────────────────────────────────────────────
-const LAUNCH_CUTOFF = new Date('2025-06-11T12:00:00'); // 1 year ago
+const LAUNCH_CUTOFF = new Date('2026-06-11T12:00:00');
+LAUNCH_CUTOFF.setDate(LAUNCH_CUTOFF.getDate() - 60); // 60 days ago
 function isLaunch(store) {
   if (!store.launched) return true;
   return new Date(store.launched + 'T12:00:00') >= LAUNCH_CUTOFF;
