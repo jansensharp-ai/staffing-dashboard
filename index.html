@@ -34,7 +34,7 @@
   .report-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; text-align: right; }
 
   .date-nav {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 6px;
     background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 4px 8px;
   }
   .date-nav-btn {
@@ -43,7 +43,15 @@
   }
   .date-nav-btn:hover:not(:disabled) { color: #f1f5f9; }
   .date-nav-btn:disabled { color: #1e2535; cursor: default; }
-  .date-nav-label { font-size: 13px; font-weight: 600; color: #f1f5f9; min-width: 72px; text-align: center; }
+  #datePicker {
+    background: transparent; border: none; color: #f1f5f9;
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    cursor: pointer; outline: none; padding: 0 2px;
+    color-scheme: dark;
+  }
+  #datePicker::-webkit-calendar-picker-indicator {
+    filter: invert(0.5); cursor: pointer;
+  }
 
   .view-toggle {
     display: flex; background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 3px; gap: 2px;
@@ -203,7 +211,7 @@
       </div>
       <div class="date-nav" id="dateNav">
         <button class="date-nav-btn" id="datePrev">&#8592;</button>
-        <span class="date-nav-label" id="dateNavLabel">—</span>
+        <input type="date" id="datePicker" />
         <button class="date-nav-btn" id="dateNext">&#8594;</button>
       </div>
     </div>
@@ -586,7 +594,10 @@ function updateDateNav() {
   document.getElementById("dateNav").style.display = isDaily ? "flex" : "none";
   if (!isDaily) return;
   const day = DATA.history[currentDayIndex];
-  document.getElementById("dateNavLabel").textContent = day.date.slice(5);
+  const picker = document.getElementById("datePicker");
+  picker.value = day.date;
+  picker.min = DATA.history[0].date;
+  picker.max = DATA.history[DATA.history.length - 1].date;
   document.getElementById("datePrev").disabled = currentDayIndex === 0;
   document.getElementById("dateNext").disabled = currentDayIndex === DATA.history.length - 1;
 }
@@ -622,6 +633,13 @@ document.getElementById("datePrev").addEventListener("click", () => {
 });
 document.getElementById("dateNext").addEventListener("click", () => {
   if (currentDayIndex < DATA.history.length - 1) { currentDayIndex++; applyView(); }
+});
+
+// Date picker
+document.getElementById("datePicker").addEventListener("change", e => {
+  const val = e.target.value;
+  const idx = DATA.history.findIndex(d => d.date === val);
+  if (idx !== -1) { currentDayIndex = idx; applyView(); }
 });
 
 buildTabs();
