@@ -718,15 +718,15 @@ function buildCard(store) {
   const laborPct = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
   const goal = store.laborPctGoal;
 
-  // Status: YES = under/at goal, CLOSE = 5–20% over, NO = >20% over
+  // Status: YES = >1pt under goal, CLOSE = within 1pt either direction, NO = >1pt over goal
   let statusClass = 'status-unknown';
   let statusWord = '—';
   let statusSub = 'Under Goal?';
   if (laborPct != null && goal != null) {
-    const ratio = laborPct / goal;
-    if (ratio <= 1.05)      { statusClass = 'status-yes';   statusWord = 'YES';   }
-    else if (ratio <= 1.20) { statusClass = 'status-close'; statusWord = 'CLOSE'; }
-    else                    { statusClass = 'status-no';    statusWord = 'NO';    }
+    const diff = laborPct - goal;
+    if (diff < -1)      { statusClass = 'status-yes';   statusWord = 'YES';   }
+    else if (diff <= 1) { statusClass = 'status-close'; statusWord = 'CLOSE'; }
+    else                { statusClass = 'status-no';    statusWord = 'NO';    }
   }
 
   const statusClass2 = store.status.toLowerCase();
