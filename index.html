@@ -7,190 +7,239 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --bg:              #f1f5f9;
+    --surface:         #ffffff;
+    --border:          #e2e8f0;
+    --text-primary:    #0f172a;
+    --text-secondary:  #475569;
+    --text-muted:      #94a3b8;
+    --accent:          #1d4ed8;
+    --toggle-bg:       #e2e8f0;
+    --toggle-active:   #ffffff;
+    --toggle-active-text: #0f172a;
+    --date-scheme:     light;
+
+    --yes-bg:          #f0fdf4;
+    --yes-border:      rgba(22,163,74,0.2);
+    --yes-text:        #15803d;
+
+    --close-bg:        #fffbeb;
+    --close-border:    rgba(217,119,6,0.25);
+    --close-text:      #92400e;
+
+    --no-bg:           #fff1f2;
+    --no-border:       rgba(225,29,72,0.2);
+    --no-text:         #be123c;
+  }
+
+  body.dark {
+    --bg:              #0f1117;
+    --surface:         #161b27;
+    --border:          #1e2535;
+    --text-primary:    #f1f5f9;
+    --text-secondary:  #94a3b8;
+    --text-muted:      #475569;
+    --toggle-bg:       #1e2535;
+    --toggle-active:   #2d3a4f;
+    --toggle-active-text: #f1f5f9;
+    --date-scheme:     dark;
+
+    --yes-bg:          rgba(45,212,191,0.08);
+    --yes-border:      rgba(45,212,191,0.2);
+    --yes-text:        #2dd4bf;
+
+    --close-bg:        rgba(245,158,11,0.08);
+    --close-border:    rgba(245,158,11,0.2);
+    --close-text:      #f59e0b;
+
+    --no-bg:           rgba(251,113,133,0.08);
+    --no-border:       rgba(251,113,133,0.2);
+    --no-text:         #fb7185;
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0f1117;
-    color: #e2e8f0;
+    background: var(--bg);
+    color: var(--text-primary);
     min-height: 100vh;
     padding: 24px;
+    transition: background 0.2s, color 0.2s;
   }
 
+  /* ── HEADER ── */
   header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #1e2535;
-    gap: 16px;
-    flex-wrap: wrap;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 16px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px; flex-wrap: wrap;
   }
-
-  header h1 { font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
-  header .subtitle { font-size: 13px; color: #64748b; margin-top: 3px; }
+  header h1 { font-size: 21px; font-weight: 700; letter-spacing: -0.3px; }
+  .subtitle  { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
 
   .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-  .report-date  { font-size: 20px; font-weight: 700; color: #f1f5f9; text-align: right; }
-  .report-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; text-align: right; }
+  .controls-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
-  .date-nav {
-    display: flex; align-items: center; gap: 6px;
-    background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 4px 8px;
-  }
-  .date-nav-btn {
-    background: none; border: none; color: #64748b; cursor: pointer;
-    font-size: 16px; padding: 2px 6px; border-radius: 4px; transition: color 0.15s;
-  }
-  .date-nav-btn:hover:not(:disabled) { color: #f1f5f9; }
-  .date-nav-btn:disabled { color: #1e2535; cursor: default; }
-  #datePicker {
-    background: transparent; border: none; color: #f1f5f9;
-    font-size: 13px; font-weight: 600; font-family: inherit;
-    cursor: pointer; outline: none; padding: 0 2px;
-    color-scheme: dark;
-  }
-  #datePicker::-webkit-calendar-picker-indicator {
-    filter: invert(0.5); cursor: pointer;
-  }
+  .report-date  { font-size: 18px; font-weight: 700; text-align: right; }
+  .report-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; text-align: right; }
 
+  /* ── TOGGLES ── */
   .view-toggle {
-    display: flex; background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 3px; gap: 2px;
+    display: flex; background: var(--toggle-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 3px; gap: 2px;
   }
   .toggle-btn {
-    padding: 5px 14px; border-radius: 6px; border: none; background: transparent;
-    color: #64748b; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+    padding: 5px 12px; border-radius: 6px; border: none; background: transparent;
+    color: var(--text-secondary); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
   }
-  .toggle-btn.active { background: #1e2535; color: #f1f5f9; }
-  .toggle-btn:hover:not(.active) { color: #94a3b8; }
+  .toggle-btn.active { background: var(--toggle-active); color: var(--toggle-active-text); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .toggle-btn:hover:not(.active) { color: var(--text-primary); }
 
+  .theme-btn {
+    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-secondary); font-size: 15px;
+    cursor: pointer; line-height: 1; transition: all 0.15s;
+  }
+  .theme-btn:hover { color: var(--text-primary); }
+
+  /* ── DATE RANGE ROW ── */
+  .date-range-row {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 12px; margin-bottom: 10px;
+  }
+  .date-range-row.hidden { display: none; }
+
+  .date-nav-btn {
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    font-size: 15px; padding: 2px 6px; border-radius: 4px; transition: color 0.15s;
+  }
+  .date-nav-btn:hover:not(:disabled) { color: var(--text-primary); }
+  .date-nav-btn:disabled { color: var(--border); cursor: default; }
+
+  .date-input {
+    background: transparent; border: none; color: var(--text-primary);
+    font-size: 13px; font-weight: 600; font-family: inherit;
+    cursor: pointer; outline: none; padding: 0 2px;
+    color-scheme: var(--date-scheme);
+  }
+  .date-sep { font-size: 12px; color: var(--text-muted); padding: 0 2px; }
+  .range-divider { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
+
+  /* ── LAST 4 ROW ── */
+  .last4-row {
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .last4-row.hidden { display: none; }
+  .last4-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); }
+  .dow-btn {
+    padding: 4px 10px; border-radius: 16px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-secondary); font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .dow-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .dow-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ── ZONE TABS ── */
   .zone-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
   .zone-tab {
-    padding: 5px 16px; border-radius: 20px; border: 1px solid #1e2535;
-    background: transparent; color: #94a3b8; font-size: 13px; cursor: pointer; transition: all 0.15s;
+    padding: 5px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-secondary); font-size: 13px; cursor: pointer; transition: all 0.15s;
   }
-  .zone-tab:hover { border-color: #334155; color: #cbd5e1; }
-  .zone-tab.active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+  .zone-tab:hover { border-color: var(--accent); color: var(--text-primary); }
+  .zone-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-  /* Grid — 4 cols on wide screens */
+  /* ── STUDIO GROUP ── */
+  .studio-group { margin-bottom: 30px; }
+  .studio-group-header {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .studio-group-title { font-size: 15px; font-weight: 700; }
+  .group-meta { font-size: 12px; color: var(--text-muted); }
+
+  /* ── CARD GRID ── */
   .store-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: 14px;
   }
 
-  /* Card */
+  /* ── CARD ── */
   .store-card {
-    background: #161b27;
-    border: 1px solid #1e2535;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
+    transition: box-shadow 0.15s;
   }
+  .store-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+  body.dark .store-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.35); }
 
   .card-header {
-    padding: 12px 14px 10px;
-    border-bottom: 1px solid #1e2535;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    padding: 13px 14px 11px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
   }
-  .store-name { font-size: 14px; font-weight: 700; color: #f1f5f9; }
-  .store-zone { font-size: 11px; color: #475569; margin-top: 2px; }
+  .card-header-left  { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .card-header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
-  .status-badge {
-    font-size: 10px; font-weight: 600; padding: 2px 8px;
-    border-radius: 10px; white-space: nowrap; flex-shrink: 0;
+  .rank-badge {
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 2px 7px; flex-shrink: 0; white-space: nowrap;
   }
-  .status-mature  { background: #052e16; color: #34d399; border: 1px solid #065f46; }
-  .status-ramping { background: #1e1a05; color: #fbbf24; border: 1px solid #713f12; }
-  .status-new     { background: #0f172a; color: #94a3b8; border: 1px solid #1e2535; }
 
-  /* Three metric panels */
-  .card-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+  .store-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .store-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .launch-badge {
+    font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; white-space: nowrap;
+    background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe;
   }
+  body.dark .launch-badge { background: rgba(29,78,216,0.15); color: #93c5fd; border-color: rgba(29,78,216,0.3); }
+
+  /* ── METRIC PANELS ── */
+  .card-body { display: grid; grid-template-columns: 1fr 1fr 1fr; }
 
   .metric {
-    padding: 14px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    border-right: 1px solid #1e2535;
+    padding: 18px 14px;
+    display: flex; flex-direction: column; gap: 5px;
+    border-right: 1px solid var(--border);
   }
   .metric:last-child { border-right: none; }
 
   .metric-label {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    color: #64748b;
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--text-muted);
   }
+  .metric-value { font-size: 26px; font-weight: 800; line-height: 1; }
+  .metric-sub   { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .pending      { font-size: 16px; font-weight: 600; color: var(--text-muted); }
 
-  .metric-value {
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1;
-    color: #f1f5f9;
-  }
-
-  .metric-sub {
-    font-size: 11px;
-    color: #475569;
-    margin-top: 2px;
-  }
-
-  /* Status panel fills entire cell */
+  /* ── STATUS PANEL ── */
   .metric-status {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 10px;
-    gap: 4px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 18px 10px; gap: 3px;
   }
 
-  .status-yes {
-    background: rgba(45,212,191,0.12);
-    border-left: 1px solid rgba(45,212,191,0.2);
-  }
-  .status-close {
-    background: rgba(245,158,11,0.10);
-    border-left: 1px solid rgba(245,158,11,0.2);
-  }
-  .status-no {
-    background: rgba(251,113,133,0.12);
-    border-left: 1px solid rgba(251,113,133,0.24);
-  }
-  .status-unknown {
-    background: transparent;
-    border-left: 1px solid #1e2535;
-  }
+  .status-yes     { background: var(--yes-bg);   border-left: 1px solid var(--yes-border);   }
+  .status-close   { background: var(--close-bg); border-left: 1px solid var(--close-border); }
+  .status-no      { background: var(--no-bg);    border-left: 1px solid var(--no-border);    }
+  .status-unknown { background: transparent;     border-left: 1px solid var(--border);       }
 
-  .status-word {
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-  }
-  .status-yes   .status-word { color: #2dd4bf; }
-  .status-close .status-word { color: #f59e0b; }
-  .status-no    .status-word { color: #fb7185; }
-  .status-unknown .status-word { color: #334155; }
+  .status-emoji   { font-size: 28px; line-height: 1; }
+  .status-delta   { font-size: 11px; font-weight: 600; margin-top: 2px; text-align: center; }
+  .status-yes   .status-delta { color: var(--yes-text);   }
+  .status-close .status-delta { color: var(--close-text); }
+  .status-no    .status-delta { color: var(--no-text);    }
+  .status-unknown .status-delta { color: var(--text-muted); }
 
   .status-sublabel {
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    color: #64748b;
-    text-align: center;
+    font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
+    text-align: center; color: var(--text-muted);
   }
-  .status-yes   .status-sublabel { color: rgba(45,212,191,0.6); }
-  .status-close .status-sublabel { color: rgba(245,158,11,0.6); }
-  .status-no    .status-sublabel { color: rgba(251,113,133,0.6); }
-
-  .pending { font-size: 14px; font-weight: 600; color: #334155; }
 </style>
 </head>
 <body>
@@ -198,10 +247,10 @@
 <header>
   <div>
     <h1>GBGS Staffing Dashboard</h1>
-    <div class="subtitle">Labor Cost % · Hours per Game · Staffing Status</div>
+    <div class="subtitle">Labor Cost % · Hours per Game · vs Target</div>
   </div>
   <div class="header-right">
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+    <div class="controls-row">
       <div class="view-toggle">
         <button class="toggle-btn active" data-view="daily">Daily</button>
         <button class="toggle-btn" data-view="mtd">MTD</button>
@@ -209,11 +258,7 @@
         <button class="toggle-btn" data-view="ytd">YTD</button>
         <button class="toggle-btn" data-view="py">PY</button>
       </div>
-      <div class="date-nav" id="dateNav">
-        <button class="date-nav-btn" id="datePrev">&#8592;</button>
-        <input type="date" id="datePicker" />
-        <button class="date-nav-btn" id="dateNext">&#8594;</button>
-      </div>
+      <button class="theme-btn" id="themeToggle" title="Toggle theme">🌙</button>
     </div>
     <div>
       <div class="report-date" id="reportDate">—</div>
@@ -222,38 +267,61 @@
   </div>
 </header>
 
+<div class="date-range-row hidden" id="dateRangeRow">
+  <button class="date-nav-btn" id="datePrev">&#8592;</button>
+  <input type="date" class="date-input" id="dateStart" />
+  <span class="date-sep">to</span>
+  <input type="date" class="date-input" id="dateEnd" />
+  <button class="date-nav-btn" id="dateNext">&#8594;</button>
+</div>
+
+<div class="last4-row hidden" id="last4Row">
+  <span class="last4-label">Last 4:</span>
+  <button class="dow-btn" data-dow="1">Mon</button>
+  <button class="dow-btn" data-dow="2">Tue</button>
+  <button class="dow-btn" data-dow="3">Wed</button>
+  <button class="dow-btn" data-dow="4">Thu</button>
+  <button class="dow-btn" data-dow="5">Fri</button>
+  <button class="dow-btn" data-dow="6">Sat</button>
+  <button class="dow-btn" data-dow="0">Sun</button>
+</div>
+
 <div class="zone-tabs" id="zoneTabs"></div>
-<div class="store-grid" id="storeGrid"></div>
+<div id="storeContainer"></div>
 
 <script>
 // ─── STORE DEFINITIONS ───────────────────────────────────────────────────────
 const STORES = [
-  // Zone C
-  { adp: "LUE", name: "GBGS Opry",               zone: "C", status: "Mature",  mgmtCost: 123.29, laborPctGoal: 20.37 },
-  { adp: "ZZV", name: "GBGS Pigeon Forge",        zone: "C", status: "New",     mgmtCost: 123.29, laborPctGoal: 23.53 },
-  { adp: "ZU9", name: "GBGS St. Louis",           zone: "C", status: "New",     mgmtCost: 136.98, laborPctGoal: 24.40 },
-  // Zone A
-  { adp: "HYM", name: "GBGS The Colony",          zone: "A", status: "Mature",  mgmtCost: 137.00, laborPctGoal: 16.32 },
-  { adp: "ZTP", name: "GBGS Houston",             zone: "A", status: "Ramping", mgmtCost: 123.29, laborPctGoal: 21.01 },
-  { adp: "VPF", name: "GBGS Georgetown",          zone: "A", status: "New",     mgmtCost:  63.42, laborPctGoal: 17.84 },
-  { adp: "SKP", name: "GBGS New Jersey",          zone: "A", status: "New",     mgmtCost: 160.25, laborPctGoal: 24.23 },
-  { adp: "DW9", name: "GBGS Times Square",        zone: "A", status: "New",     mgmtCost: 197.25, laborPctGoal: 21.14 },
-  { adp: "00H", name: "GBGS Birmingham",          zone: "A", status: "New",     mgmtCost: 143.83, laborPctGoal: 27.37 },
-  { adp: "E3G", name: "GBGS Orlando",             zone: "A", status: "New",     mgmtCost: 136.99, laborPctGoal: 35.00 },
-  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", status: "New",     mgmtCost: 136.99, laborPctGoal: 50.00 },
-  { adp: "J2M", name: "GBGS Schaumburg",          zone: "A", status: "New",     mgmtCost: 120.54, laborPctGoal: 50.00 },
-  // Zone B
-  { adp: "AY4", name: "GBGS MOA",                 zone: "B", status: "Ramping", mgmtCost: 150.68, laborPctGoal: 29.72 },
-  { adp: "ZTA", name: "GBGS SF Wharf",            zone: "B", status: "Ramping", mgmtCost:   0.00, laborPctGoal: 39.20 },
-  { adp: "ZTM", name: "GBGS Oak Brook",           zone: "B", status: "Ramping", mgmtCost: 213.01, laborPctGoal: 20.01 },
-  { adp: "ZU8", name: "GBGS Las Vegas",           zone: "B", status: "New",     mgmtCost:  90.41, laborPctGoal: 22.87 },
-  { adp: "ASE", name: "GBGS Honolulu",            zone: "B", status: "New",     mgmtCost:  70.96, laborPctGoal: 30.99 },
-  { adp: "ZUE", name: "GBGS San Jose",            zone: "B", status: "New",     mgmtCost: 213.70, laborPctGoal: 23.68 },
-  { adp: "QTV", name: "GBGS Las Vegas Area 15",   zone: "B", status: "New",     mgmtCost:  90.41, laborPctGoal: 21.80 },
-  { adp: "RX8", name: "GBGS Murray",              zone: "B", status: "New",     mgmtCost:  49.26, laborPctGoal: 35.03 },
-  { adp: "LYC", name: "GBGS Seattle Southcenter", zone: "B", status: "New",     mgmtCost: 109.59, laborPctGoal: 33.50 },
-  { adp: "MW2", name: "GBGS Seattle Downtown",    zone: "B", status: "New",     mgmtCost: 109.59, laborPctGoal: 27.67 },
+  { adp: "LUE", name: "GBGS Opry",               zone: "C", studios: 2, launched: "2023-07-15", mgmtCost: 123.29, laborPctGoal: 20.37 },
+  { adp: "ZZV", name: "GBGS Pigeon Forge",        zone: "C", studios: 2, launched: "2025-02-20", mgmtCost: 123.29, laborPctGoal: 23.53 },
+  { adp: "ZU9", name: "GBGS St. Louis",           zone: "C", studios: 2, launched: "2025-05-18", mgmtCost: 136.98, laborPctGoal: 24.40 },
+  { adp: "HYM", name: "GBGS The Colony",          zone: "A", studios: 3, launched: "2023-11-21", mgmtCost: 137.00, laborPctGoal: 16.32 },
+  { adp: "ZTP", name: "GBGS Houston",             zone: "A", studios: 2, launched: "2024-10-20", mgmtCost: 123.29, laborPctGoal: 21.01 },
+  { adp: "VPF", name: "GBGS Georgetown",          zone: "A", studios: 2, launched: "2025-03-09", mgmtCost:  63.42, laborPctGoal: 17.84 },
+  { adp: "SKP", name: "GBGS New Jersey",          zone: "A", studios: 4, launched: "2025-04-20", mgmtCost: 160.25, laborPctGoal: 24.23 },
+  { adp: "DW9", name: "GBGS Times Square",        zone: "A", studios: 5, launched: "2025-12-02", mgmtCost: 197.25, laborPctGoal: 21.14 },
+  { adp: "00H", name: "GBGS Birmingham",          zone: "A", studios: 2, launched: "2026-02-28", mgmtCost: 143.83, laborPctGoal: 27.37 },
+  { adp: "E3G", name: "GBGS Orlando",             zone: "A", studios: 2, launched: "2026-03-18", mgmtCost: 136.99, laborPctGoal: 35.00 },
+  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", studios: 3, launched: null,          mgmtCost: 136.99, laborPctGoal: 50.00 },
+  { adp: "J2M", name: "GBGS Schaumburg",          zone: "A", studios: 3, launched: "2026-04-06", mgmtCost: 120.54, laborPctGoal: 50.00 },
+  { adp: "AY4", name: "GBGS MOA",                 zone: "B", studios: 3, launched: "2024-05-25", mgmtCost: 150.68, laborPctGoal: 29.72 },
+  { adp: "ZTA", name: "GBGS SF Wharf",            zone: "B", studios: 2, launched: "2024-08-01", mgmtCost:   0.00, laborPctGoal: 39.20 },
+  { adp: "ZTM", name: "GBGS Oak Brook",           zone: "B", studios: 4, launched: "2024-12-22", mgmtCost: 213.01, laborPctGoal: 20.01 },
+  { adp: "ZU8", name: "GBGS Las Vegas",           zone: "B", studios: 3, launched: "2025-04-06", mgmtCost:  90.41, laborPctGoal: 22.87 },
+  { adp: "ASE", name: "GBGS Honolulu",            zone: "B", studios: 2, launched: "2025-04-27", mgmtCost:  70.96, laborPctGoal: 30.99 },
+  { adp: "ZUE", name: "GBGS Valley Fair",         zone: "B", studios: 4, launched: "2025-07-05", mgmtCost: 213.70, laborPctGoal: 23.68 },
+  { adp: "QTV", name: "GBGS Las Vegas Area 15",   zone: "B", studios: 2, launched: "2025-12-19", mgmtCost:  90.41, laborPctGoal: 21.80 },
+  { adp: "RX8", name: "GBGS Murray",              zone: "B", studios: 2, launched: "2026-01-18", mgmtCost:  49.26, laborPctGoal: 35.03 },
+  { adp: "LYC", name: "GBGS Seattle Southcenter", zone: "B", studios: 2, launched: "2025-10-12", mgmtCost: 109.59, laborPctGoal: 33.50 },
+  { adp: "MW2", name: "GBGS Seattle Downtown",    zone: "B", studios: 2, launched: "2025-12-01", mgmtCost: 109.59, laborPctGoal: 27.67 },
 ];
+
+// ─── LAUNCH DETECTION ────────────────────────────────────────────────────────
+const LAUNCH_CUTOFF = new Date('2025-06-11T12:00:00'); // 1 year ago
+function isLaunch(store) {
+  if (!store.launched) return true;
+  return new Date(store.launched + 'T12:00:00') >= LAUNCH_CUTOFF;
+}
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const DATA = {
@@ -611,32 +679,16 @@ const DATA = {
       "MW2": { games: 677,  revenue: 266077.90, laborHours: 2973.79,  laborCost: 65781.92  },
     }
   },
-  // DW game counts for MTD (used for Hrs/Game calculation)
   mtdDW: {
-    "LUE": { games: 97  },
-    "ZZV": { games: 81  },
-    "ZU9": { games: 62  },
-    "HYM": { games: 128 },
-    "ZTP": { games: 80  },
-    "VPF": { games: 90  },
-    "SKP": { games: 111 },
-    "DW9": { games: 125 },
-    "00H": { games: 83  },
-    "E3G": { games: 76  },
-    "E3Q": { games: 106 },
-    "AY4": { games: 59  },
-    "ZTA": { games: 53  },
-    "ZTM": { games: 114 },
-    "ZU8": { games: 67  },
-    "ASE": { games: 70  },
-    "ZUE": { games: 105 },
-    "QTV": { games: 99  },
-    "RX8": { games: 32  },
-    "J2M": { games: 41  },
-    "LYC": { games: 56  },
+    "LUE": { games: 97  }, "ZZV": { games: 81  }, "ZU9": { games: 62  },
+    "HYM": { games: 128 }, "ZTP": { games: 80  }, "VPF": { games: 90  },
+    "SKP": { games: 111 }, "DW9": { games: 125 }, "00H": { games: 83  },
+    "E3G": { games: 76  }, "E3Q": { games: 106 }, "AY4": { games: 59  },
+    "ZTA": { games: 53  }, "ZTM": { games: 114 }, "ZU8": { games: 67  },
+    "ASE": { games: 70  }, "ZUE": { games: 105 }, "QTV": { games: 99  },
+    "RX8": { games: 32  }, "J2M": { games: 41  }, "LYC": { games: 56  },
     "MW2": { games: 65  },
   },
-  // MTD actuals from Forecast & Actuals CSV — source of truth for revenue and labor cost
   mtdCSV: {
     "LUE": { revenue: 26257, laborCost: 5623 },
     "HYM": { revenue: 38264, laborCost: 6248 },
@@ -663,18 +715,49 @@ const DATA = {
   }
 };
 
-// ─── DATA HELPERS ────────────────────────────────────────────────────────────
-let currentView = "daily";
-let currentZone = "All";
-let currentDayIndex = DATA.history.length - 1;
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentView      = "daily";
+let currentZone      = "All";
+let currentDateStart = DATA.history[DATA.history.length - 1].date;
+let currentDateEnd   = DATA.history[DATA.history.length - 1].date;
+let selectedDates    = null;   // null = contiguous range; array = explicit set (Last 4)
+let activeDow        = null;   // which day-of-week button is active
 
+// ─── DATA HELPERS ────────────────────────────────────────────────────────────
 function getDailyData() {
-  const day = DATA.history[currentDayIndex];
-  return { date: day.date, stores: day.stores, days: 1 };
+  let days;
+  if (selectedDates) {
+    days = DATA.history.filter(d => selectedDates.includes(d.date));
+  } else {
+    days = DATA.history.filter(d => d.date >= currentDateStart && d.date <= currentDateEnd);
+  }
+  if (days.length === 0) return { date: currentDateStart, stores: {}, days: 1 };
+
+  const stores = {};
+  for (const day of days) {
+    for (const [code, s] of Object.entries(day.stores)) {
+      if (!stores[code]) stores[code] = { games: 0, revenue: 0, laborHours: 0, laborCost: 0 };
+      stores[code].games      += s.games      || 0;
+      stores[code].revenue    += s.revenue    || 0;
+      stores[code].laborHours += s.laborHours || 0;
+      stores[code].laborCost  += s.laborCost  || 0;
+    }
+  }
+
+  let dateLabel;
+  if (days.length === 1) {
+    dateLabel = days[0].date;
+  } else if (selectedDates) {
+    const dowNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const dow = dowNames[new Date(days[0].date + 'T12:00:00').getDay()];
+    dateLabel = `${days.length}× ${dow} (${days[0].date.slice(5)} – ${days[days.length-1].date.slice(5)})`;
+  } else {
+    dateLabel = `${days[0].date} – ${days[days.length-1].date}`;
+  }
+  return { date: dateLabel, stores, days: days.length };
 }
 
 function getMTDData() {
-  // Sum labor hours from daily ADP history (for Hrs/Game)
   const laborHours = {};
   for (const day of DATA.history) {
     for (const [code, s] of Object.entries(day.stores)) {
@@ -684,11 +767,11 @@ function getMTDData() {
   const stores = {};
   for (const code of Object.keys(DATA.mtdCSV)) {
     stores[code] = {
-      games:          DATA.mtdDW[code]?.games ?? 0,
-      revenue:        DATA.mtdCSV[code].revenue,
-      laborHours:     laborHours[code] ?? null,
-      laborCost:      DATA.mtdCSV[code].laborCost,
-      mgmtIncluded:   true,  // total cost already includes mgmt — don't add again
+      games:        DATA.mtdDW[code]?.games ?? 0,
+      revenue:      DATA.mtdCSV[code].revenue,
+      laborHours:   laborHours[code] ?? null,
+      laborCost:    DATA.mtdCSV[code].laborCost,
+      mgmtIncluded: true,
     };
   }
   const dates = DATA.history.map(d => d.date);
@@ -698,86 +781,74 @@ function getMTDData() {
 function getSnowflakeData(key) {
   const src = DATA[key];
   const stores = {};
-  for (const [code, s] of Object.entries(src.stores)) {
-    stores[code] = { ...s };
-  }
+  for (const [code, s] of Object.entries(src.stores)) stores[code] = { ...s };
   return { date: src.label, stores, days: src.days };
 }
 
 // ─── CARD BUILDER ────────────────────────────────────────────────────────────
-function buildCard(store) {
+function buildCard(store, rank) {
   const d = (window.__activeStores || {})[store.adp] || {};
-  const games     = d.games ?? 0;
-  const revenue   = d.revenue ?? 0;
-  const laborHrs  = d.laborHours;
-  const laborCost = d.laborCost;
+  const games      = d.games ?? 0;
+  const revenue    = d.revenue ?? 0;
+  const laborHrs   = d.laborHours;
+  const laborCost  = d.laborCost;
   const periodDays = window.__activePeriodDays ?? 1;
-  const mgmt = d.mgmtIncluded ? 0 : (store.mgmtCost != null ? store.mgmtCost * periodDays : 0);
-  const totalCost = laborCost != null ? laborCost + mgmt : null;
-  const hpg = (laborHrs != null && games > 0) ? (laborHrs / games) : null;
-  const laborPct = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
-  const goal = store.laborPctGoal;
+  const mgmt       = d.mgmtIncluded ? 0 : (store.mgmtCost != null ? store.mgmtCost * periodDays : 0);
+  const totalCost  = laborCost != null ? laborCost + mgmt : null;
+  const hpg        = (laborHrs != null && games > 0) ? (laborHrs / games) : null;
+  const laborPct   = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
+  const goal       = store.laborPctGoal;
 
-  // Status: YES = >1pt under goal, CLOSE = within 1pt either direction, NO = >1pt over goal
-  let statusClass = 'status-unknown';
-  let statusWord = '—';
-  let statusSub = 'Under Goal?';
+  // Status: 🎉 = >1pt under, 🤏 = within 1pt, ❌ = >1pt over
+  let statusClass = 'status-unknown', emoji = '—', delta = null;
   if (laborPct != null && goal != null) {
-    const diff = laborPct - goal;
-    if (diff < -1)      { statusClass = 'status-yes';   statusWord = 'YES';   }
-    else if (diff <= 1) { statusClass = 'status-close'; statusWord = 'CLOSE'; }
-    else                { statusClass = 'status-no';    statusWord = 'NO';    }
+    delta = laborPct - goal;
+    if (delta < -1)      { statusClass = 'status-yes';   emoji = '🎉'; }
+    else if (delta <= 1) { statusClass = 'status-close'; emoji = '🤏'; }
+    else                 { statusClass = 'status-no';    emoji = '❌'; }
   }
 
-  const statusClass2 = store.status.toLowerCase();
+  const deltaStr = delta !== null
+    ? (delta >= 0
+        ? `+${delta.toFixed(1)}% over`
+        : `${Math.abs(delta).toFixed(1)}% under`)
+    : '';
 
-  // Labor % panel
-  let pctDisplay, pctSub;
-  if (laborPct != null) {
-    pctDisplay = `${laborPct.toFixed(1)}%`;
-    pctSub = goal != null ? `goal ${goal.toFixed(1)}%` : 'no goal set';
-  } else {
-    pctDisplay = null;
-    pctSub = 'awaiting ADP';
-  }
+  const pctDisplay = laborPct != null ? `${laborPct.toFixed(1)}%` : null;
+  const pctSub     = laborPct != null ? (goal != null ? `goal ${goal.toFixed(1)}%` : 'no goal') : 'awaiting data';
 
-  // Hrs/Game panel
-  let hpgDisplay, hpgSub;
-  if (hpg != null) {
-    hpgDisplay = hpg.toFixed(2);
-    hpgSub = `${games} games`;
-  } else {
-    hpgDisplay = null;
-    hpgSub = games > 0 ? 'awaiting ADP' : 'no games';
-  }
+  const hpgDisplay = hpg != null ? hpg.toFixed(2) : null;
+  const hpgSub     = hpg != null ? `${games} games` : (games > 0 ? 'awaiting data' : 'no games');
+
+  const launchBadge = isLaunch(store) ? `<div class="launch-badge">Launch</div>` : '';
 
   return `
-  <div class="store-card" data-zone="${store.zone}">
+  <div class="store-card">
     <div class="card-header">
-      <div>
-        <div class="store-name">${store.name.replace('GBGS ', '')}</div>
-        <div class="store-zone">Zone ${store.zone}</div>
+      <div class="card-header-left">
+        <div class="rank-badge">#${rank}</div>
+        <div>
+          <div class="store-name">${store.name.replace('GBGS ', '')}</div>
+          <div class="store-meta">Zone ${store.zone} · ${store.studios} Studio${store.studios > 1 ? 's' : ''}</div>
+        </div>
       </div>
-      <div class="status-badge status-${statusClass2}">${store.status}</div>
+      <div class="card-header-right">${launchBadge}</div>
     </div>
     <div class="card-body">
       <div class="metric">
         <div class="metric-label">Labor % Rev</div>
-        ${pctDisplay
-          ? `<div class="metric-value">${pctDisplay}</div>`
-          : `<div class="pending">—</div>`}
+        ${pctDisplay ? `<div class="metric-value">${pctDisplay}</div>` : `<div class="pending">—</div>`}
         <div class="metric-sub">${pctSub}</div>
       </div>
       <div class="metric">
         <div class="metric-label">Hrs / Game</div>
-        ${hpgDisplay
-          ? `<div class="metric-value">${hpgDisplay}</div>`
-          : `<div class="pending">—</div>`}
+        ${hpgDisplay ? `<div class="metric-value">${hpgDisplay}</div>` : `<div class="pending">—</div>`}
         <div class="metric-sub">${hpgSub}</div>
       </div>
       <div class="metric-status ${statusClass}">
-        <div class="status-sublabel">Under Goal?</div>
-        <div class="status-word">${statusWord}</div>
+        <div class="status-emoji">${emoji}</div>
+        <div class="status-delta">${deltaStr}</div>
+        <div class="status-sublabel">vs Target</div>
       </div>
     </div>
   </div>`;
@@ -795,44 +866,144 @@ function buildTabs() {
     document.querySelectorAll(".zone-tab").forEach(t => t.classList.remove("active"));
     btn.classList.add("active");
     currentZone = btn.dataset.zone;
-    renderGrid(currentZone);
+    renderGrid();
   });
 }
 
-function renderGrid(zone = "All") {
-  const filtered = zone === "All" ? STORES : STORES.filter(s => s.zone === zone);
-  document.getElementById("storeGrid").innerHTML = filtered.map(buildCard).join('');
+function renderGrid() {
+  const filtered = currentZone === "All" ? STORES : STORES.filter(s => s.zone === currentZone);
+  const active     = window.__activeStores     || {};
+  const periodDays = window.__activePeriodDays ?? 1;
+
+  // Compute performance delta for ranking
+  const withPerf = filtered.map(store => {
+    const d        = active[store.adp] || {};
+    const revenue  = d.revenue ?? 0;
+    const lc       = d.laborCost;
+    const mgmt     = d.mgmtIncluded ? 0 : (store.mgmtCost * periodDays);
+    const total    = lc != null ? lc + mgmt : null;
+    const pct      = (total != null && revenue > 0) ? (total / revenue * 100) : null;
+    const diff     = (pct != null && store.laborPctGoal != null) ? pct - store.laborPctGoal : null;
+    return { store, diff };
+  });
+
+  // Group by studio count
+  const groups = {};
+  for (const item of withPerf) {
+    const s = item.store.studios;
+    if (!groups[s]) groups[s] = [];
+    groups[s].push(item);
+  }
+
+  // Sort groups descending (5 → 4 → 3 → 2)
+  const counts = Object.keys(groups).map(Number).sort((a, b) => b - a);
+
+  let html = '';
+  for (const count of counts) {
+    const group = groups[count];
+    // Rank: lowest diff = best = #1; null diff = last
+    group.sort((a, b) => {
+      if (a.diff === null && b.diff === null) return 0;
+      if (a.diff === null) return 1;
+      if (b.diff === null) return -1;
+      return a.diff - b.diff;
+    });
+
+    html += `<div class="studio-group">`;
+    html += `<div class="studio-group-header">
+      <span class="studio-group-title">${count} Studio${count > 1 ? 's' : ''}</span>
+      <span class="group-meta">${group.length} location${group.length > 1 ? 's' : ''}</span>
+    </div>`;
+    html += `<div class="store-grid">`;
+    group.forEach(({ store }, i) => { html += buildCard(store, i + 1); });
+    html += `</div></div>`;
+  }
+
+  document.getElementById("storeContainer").innerHTML = html;
 }
 
-function updateDateNav() {
+// ─── DATE RANGE ──────────────────────────────────────────────────────────────
+function updateDateControls() {
   const isDaily = currentView === "daily";
-  document.getElementById("dateNav").style.display = isDaily ? "flex" : "none";
+  document.getElementById("dateRangeRow").classList.toggle("hidden", !isDaily);
+  document.getElementById("last4Row").classList.toggle("hidden", !isDaily);
   if (!isDaily) return;
-  const day = DATA.history[currentDayIndex];
-  const picker = document.getElementById("datePicker");
-  picker.value = day.date;
-  picker.min = DATA.history[0].date;
-  picker.max = DATA.history[DATA.history.length - 1].date;
-  document.getElementById("datePrev").disabled = currentDayIndex === 0;
-  document.getElementById("dateNext").disabled = currentDayIndex === DATA.history.length - 1;
+
+  const allDates = DATA.history.map(d => d.date);
+  const minDate  = allDates[0];
+  const maxDate  = allDates[allDates.length - 1];
+  const startEl  = document.getElementById("dateStart");
+  const endEl    = document.getElementById("dateEnd");
+
+  startEl.min = endEl.min = minDate;
+  startEl.max = endEl.max = maxDate;
+  startEl.value = currentDateStart;
+  endEl.value   = currentDateEnd;
+
+  const startIdx = allDates.indexOf(currentDateStart);
+  const endIdx   = allDates.indexOf(currentDateEnd);
+  document.getElementById("datePrev").disabled = startIdx <= 0;
+  document.getElementById("dateNext").disabled = endIdx >= allDates.length - 1;
 }
 
+function shiftRange(delta) {
+  const allDates = DATA.history.map(d => d.date);
+  const si = allDates.indexOf(currentDateStart);
+  const ei = allDates.indexOf(currentDateEnd);
+  const newSi = si + delta;
+  const newEi = ei + delta;
+  if (newSi < 0 || newEi >= allDates.length) return;
+  currentDateStart = allDates[newSi];
+  currentDateEnd   = allDates[newEi];
+  selectedDates = null;
+  activeDow = null;
+  updateDowButtons();
+  applyView();
+}
+
+function updateDowButtons() {
+  document.querySelectorAll(".dow-btn").forEach(btn => {
+    btn.classList.toggle("active", activeDow !== null && parseInt(btn.dataset.dow) === activeDow);
+  });
+}
+
+function applyLast4(dow) {
+  const matching = DATA.history
+    .filter(d => new Date(d.date + 'T12:00:00').getDay() === dow)
+    .map(d => d.date)
+    .slice(-4);
+  if (matching.length === 0) return;
+  selectedDates    = matching;
+  activeDow        = dow;
+  currentDateStart = matching[0];
+  currentDateEnd   = matching[matching.length - 1];
+  updateDowButtons();
+  applyView();
+}
+
+// ─── APPLY VIEW ──────────────────────────────────────────────────────────────
 function applyView() {
   let d;
   if      (currentView === "daily") d = getDailyData();
   else if (currentView === "mtd")   d = getMTDData();
   else                               d = getSnowflakeData(currentView);
 
-  const labels = { daily: "Report Date", mtd: `MTD · ${DATA.month}`, tq: "Trailing Quarter", ytd: "Year to Date", py: "Prior Year" };
+  const labels = {
+    daily: "Report Date",
+    mtd:   `MTD · ${DATA.month}`,
+    tq:    "Trailing Quarter",
+    ytd:   "Year to Date",
+    py:    "Prior Year"
+  };
   document.getElementById("reportDate").textContent  = d.date;
   document.getElementById("reportLabel").textContent = labels[currentView];
   window.__activeStores     = d.stores;
   window.__activePeriodDays = d.days ?? 1;
-  updateDateNav();
-  renderGrid(currentZone);
+  updateDateControls();
+  renderGrid();
 }
 
-// Toggle
+// ─── EVENTS ──────────────────────────────────────────────────────────────────
 document.querySelector(".view-toggle").addEventListener("click", e => {
   const btn = e.target.closest(".toggle-btn");
   if (!btn) return;
@@ -842,19 +1013,43 @@ document.querySelector(".view-toggle").addEventListener("click", e => {
   applyView();
 });
 
-// Date arrows
-document.getElementById("datePrev").addEventListener("click", () => {
-  if (currentDayIndex > 0) { currentDayIndex--; applyView(); }
-});
-document.getElementById("dateNext").addEventListener("click", () => {
-  if (currentDayIndex < DATA.history.length - 1) { currentDayIndex++; applyView(); }
+document.getElementById("datePrev").addEventListener("click", () => shiftRange(-1));
+document.getElementById("dateNext").addEventListener("click", () => shiftRange(+1));
+
+document.getElementById("dateStart").addEventListener("change", e => {
+  currentDateStart = e.target.value;
+  if (currentDateStart > currentDateEnd) currentDateEnd = currentDateStart;
+  selectedDates = null; activeDow = null;
+  updateDowButtons();
+  applyView();
 });
 
-// Date picker
-document.getElementById("datePicker").addEventListener("change", e => {
-  const val = e.target.value;
-  const idx = DATA.history.findIndex(d => d.date === val);
-  if (idx !== -1) { currentDayIndex = idx; applyView(); }
+document.getElementById("dateEnd").addEventListener("change", e => {
+  currentDateEnd = e.target.value;
+  if (currentDateEnd < currentDateStart) currentDateStart = currentDateEnd;
+  selectedDates = null; activeDow = null;
+  updateDowButtons();
+  applyView();
+});
+
+document.getElementById("last4Row").addEventListener("click", e => {
+  const btn = e.target.closest(".dow-btn");
+  if (!btn) return;
+  const dow = parseInt(btn.dataset.dow);
+  if (activeDow === dow) {
+    // toggle off → revert to single day
+    activeDow = null; selectedDates = null;
+    currentDateStart = currentDateEnd = DATA.history[DATA.history.length - 1].date;
+    updateDowButtons();
+    applyView();
+  } else {
+    applyLast4(dow);
+  }
+});
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const isDark = document.body.classList.toggle("dark");
+  document.getElementById("themeToggle").textContent = isDark ? "☀️" : "🌙";
 });
 
 buildTabs();
