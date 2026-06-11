@@ -240,6 +240,70 @@
     font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
     text-align: center; color: var(--text-muted);
   }
+
+  /* ── COVERAGE PANEL ── */
+  .store-card-wrapper {
+    display: contents;
+  }
+  .coverage-panel {
+    grid-column: 1 / -1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: -4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+  }
+  .coverage-panel.hidden { display: none; }
+
+  .coverage-inner {
+    padding: 12px 14px 14px;
+  }
+
+  .coverage-title {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .coverage-table {
+    width: 100%; border-collapse: collapse; font-size: 11px;
+  }
+  .coverage-table th {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.4px; color: var(--text-muted);
+    padding: 0 6px 5px; text-align: center; white-space: nowrap;
+  }
+  .coverage-table th:first-child { text-align: left; }
+  .coverage-table td {
+    padding: 4px 6px; text-align: center; color: var(--text-secondary);
+    border-top: 1px solid var(--border); white-space: nowrap;
+  }
+  .coverage-table td:first-child { text-align: left; color: var(--text-primary); font-weight: 600; }
+
+  .pre-ok   { color: #15803d; font-weight: 700; }
+  .pre-warn { color: #92400e; font-weight: 700; }
+  .pre-late { color: #be123c; font-weight: 700; }
+  body.dark .pre-ok   { color: #2dd4bf; }
+  body.dark .pre-warn { color: #f59e0b; }
+  body.dark .pre-late { color: #fb7185; }
+
+  .post-ok   { color: var(--text-secondary); }
+  .post-neg  { color: var(--no-text); font-weight: 700; }
+
+  .coverage-empty {
+    font-size: 12px; color: var(--text-muted); padding: 10px 0; text-align: center;
+  }
+
+  .store-card.card-expanded {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+  }
+  .store-card { cursor: pointer; }
+
 </style>
 </head>
 <body>
@@ -824,7 +888,7 @@ function buildCard(store, rank) {
   const launchBadge = isLaunch(store) ? `<div class="launch-badge">Launch</div>` : '';
 
   return `
-  <div class="store-card">
+  <div class="store-card" data-adp="${store.adp}">
     <div class="card-header">
       <div class="card-header-left">
         <div class="rank-badge">#${rank}</div>
@@ -1055,6 +1119,2215 @@ document.getElementById("themeToggle").addEventListener("click", () => {
 
 buildTabs();
 applyView();
+
+// ─── COVERAGE DATA ───────────────────────────────────────────────────────────
+const COVERAGE_DATA = {
+  "LUE": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:58",
+      "lastOut": "23:03",
+      "firstGame": "11:00",
+      "lastGame": "20:30",
+      "preMin": 62,
+      "postMin": 78
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:55",
+      "lastOut": "22:55",
+      "firstGame": "13:00",
+      "lastGame": "20:30",
+      "preMin": 185,
+      "postMin": 70
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:47",
+      "lastOut": "22:13",
+      "firstGame": "18:30",
+      "lastGame": "19:00",
+      "preMin": 523,
+      "postMin": 118
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:32",
+      "lastOut": "00:38",
+      "firstGame": "11:00",
+      "lastGame": "21:30",
+      "preMin": 88,
+      "postMin": 113
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "08:17",
+      "lastOut": "01:04",
+      "firstGame": "11:00",
+      "lastGame": "21:30",
+      "preMin": 163,
+      "postMin": 139
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "08:30",
+      "lastOut": "22:23",
+      "firstGame": "10:00",
+      "lastGame": "19:00",
+      "preMin": 90,
+      "postMin": 128
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "09:13",
+      "lastOut": "01:00",
+      "firstGame": "10:00",
+      "lastGame": "20:30",
+      "preMin": 47,
+      "postMin": 195
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "10:43",
+      "lastOut": "22:21",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": 17,
+      "postMin": 66
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "08:02",
+      "lastOut": "23:38",
+      "firstGame": "10:00",
+      "lastGame": "21:30",
+      "preMin": 118,
+      "postMin": 53
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "08:59",
+      "lastOut": "23:24",
+      "firstGame": "17:30",
+      "lastGame": "20:00",
+      "preMin": 511,
+      "postMin": 129
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:01",
+      "lastOut": "22:07",
+      "firstGame": "09:30",
+      "lastGame": "20:00",
+      "preMin": 29,
+      "postMin": 52
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "08:11",
+      "lastOut": "01:31",
+      "firstGame": "11:00",
+      "lastGame": "23:30",
+      "preMin": 169,
+      "postMin": 46
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "09:03",
+      "lastOut": "00:06",
+      "firstGame": "13:00",
+      "lastGame": "22:00",
+      "preMin": 237,
+      "postMin": 51
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:10",
+      "lastOut": "00:56",
+      "firstGame": "11:00",
+      "lastGame": "22:00",
+      "preMin": 110,
+      "postMin": 101
+    }
+  ],
+  "ZZV": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "11:00",
+      "lastOut": "22:54",
+      "firstGame": "12:00",
+      "lastGame": "12:00",
+      "preMin": 60,
+      "postMin": 579
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:48",
+      "lastOut": "22:16",
+      "firstGame": "13:30",
+      "lastGame": "15:30",
+      "preMin": 222,
+      "postMin": 331
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:56",
+      "lastOut": "20:20",
+      "firstGame": "11:00",
+      "lastGame": "14:00",
+      "preMin": 64,
+      "postMin": 305
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "08:26",
+      "lastOut": "16:33",
+      "firstGame": "12:00",
+      "lastGame": "15:30",
+      "preMin": 214,
+      "postMin": -12
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "12:26",
+      "lastOut": "20:29",
+      "firstGame": "09:00",
+      "lastGame": "15:30",
+      "preMin": -206,
+      "postMin": 224
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "12:30",
+      "lastOut": "20:13",
+      "firstGame": "13:30",
+      "lastGame": "22:30",
+      "preMin": 60,
+      "postMin": -212
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "09:49",
+      "lastOut": "18:55",
+      "firstGame": "11:00",
+      "lastGame": "21:00",
+      "preMin": 71,
+      "postMin": -200
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:30",
+      "lastOut": "23:46",
+      "firstGame": "10:30",
+      "lastGame": "19:30",
+      "preMin": 60,
+      "postMin": 181
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "01:36",
+      "lastOut": "23:37",
+      "firstGame": "10:30",
+      "lastGame": "16:30",
+      "preMin": 534,
+      "postMin": 352
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:08",
+      "lastOut": "22:25",
+      "firstGame": "14:00",
+      "lastGame": "19:30",
+      "preMin": 292,
+      "postMin": 100
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "08:32",
+      "lastOut": "00:47",
+      "firstGame": "11:00",
+      "lastGame": "15:00",
+      "preMin": 148,
+      "postMin": 512
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "16:39",
+      "lastOut": "23:47",
+      "firstGame": "12:00",
+      "lastGame": "19:30",
+      "preMin": -279,
+      "postMin": 182
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "10:32",
+      "lastOut": "19:38",
+      "firstGame": "11:00",
+      "lastGame": "21:00",
+      "preMin": 28,
+      "postMin": -157
+    }
+  ],
+  "ZU9": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "10:45",
+      "lastOut": "23:23",
+      "firstGame": "14:00",
+      "lastGame": "18:30",
+      "preMin": 195,
+      "postMin": 218
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:42",
+      "lastOut": "23:44",
+      "firstGame": "10:00",
+      "lastGame": "18:00",
+      "preMin": 18,
+      "postMin": 269
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "10:54",
+      "lastOut": "16:53",
+      "firstGame": "12:30",
+      "lastGame": "20:30",
+      "preMin": 96,
+      "postMin": -292
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "12:11",
+      "lastOut": "22:08",
+      "firstGame": "14:00",
+      "lastGame": "22:00",
+      "preMin": 109,
+      "postMin": -67
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "09:21",
+      "lastOut": "19:54",
+      "firstGame": "17:30",
+      "lastGame": "20:30",
+      "preMin": 489,
+      "postMin": -111
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:00",
+      "lastOut": "17:13",
+      "firstGame": "10:00",
+      "lastGame": "20:30",
+      "preMin": 60,
+      "postMin": -272
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:00",
+      "lastOut": "22:13",
+      "firstGame": "11:30",
+      "lastGame": "23:00",
+      "preMin": 90,
+      "postMin": -122
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:15",
+      "lastOut": "21:32",
+      "firstGame": "16:00",
+      "lastGame": "18:30",
+      "preMin": 405,
+      "postMin": 107
+    }
+  ],
+  "HYM": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "08:55",
+      "lastOut": "00:49",
+      "firstGame": "09:30",
+      "lastGame": "21:00",
+      "preMin": 35,
+      "postMin": 154
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "11:44",
+      "lastOut": "01:04",
+      "firstGame": "14:30",
+      "lastGame": "19:30",
+      "preMin": 166,
+      "postMin": 259
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:32",
+      "lastOut": "22:59",
+      "firstGame": "10:00",
+      "lastGame": "19:30",
+      "preMin": 28,
+      "postMin": 134
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:53",
+      "lastOut": "22:15",
+      "firstGame": "12:30",
+      "lastGame": "19:00",
+      "preMin": 157,
+      "postMin": 120
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "11:41",
+      "lastOut": "01:00",
+      "firstGame": "12:30",
+      "lastGame": "21:30",
+      "preMin": 49,
+      "postMin": 135
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:05",
+      "lastOut": "01:07",
+      "firstGame": "12:00",
+      "lastGame": "23:00",
+      "preMin": 115,
+      "postMin": 52
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "12:48",
+      "lastOut": "21:38",
+      "firstGame": "11:30",
+      "lastGame": "19:30",
+      "preMin": -78,
+      "postMin": 53
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "10:34",
+      "lastOut": "22:26",
+      "firstGame": "12:00",
+      "lastGame": "21:30",
+      "preMin": 86,
+      "postMin": -19
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "08:30",
+      "lastOut": "22:05",
+      "firstGame": "15:00",
+      "lastGame": "20:00",
+      "preMin": 390,
+      "postMin": 50
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "10:31",
+      "lastOut": "22:05",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": 29,
+      "postMin": 50
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:16",
+      "lastOut": "00:38",
+      "firstGame": "12:00",
+      "lastGame": "23:30",
+      "preMin": 104,
+      "postMin": -7
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:02",
+      "lastOut": "00:09",
+      "firstGame": "10:30",
+      "lastGame": "22:30",
+      "preMin": 88,
+      "postMin": 24
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:30",
+      "lastOut": "00:59",
+      "firstGame": "14:00",
+      "lastGame": "21:00",
+      "preMin": 210,
+      "postMin": 164
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "10:06",
+      "lastOut": "22:20",
+      "firstGame": "10:30",
+      "lastGame": "20:30",
+      "preMin": 24,
+      "postMin": 35
+    }
+  ],
+  "ZTP": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "10:43",
+      "lastOut": "23:18",
+      "firstGame": "14:30",
+      "lastGame": "21:30",
+      "preMin": 227,
+      "postMin": 33
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "08:00",
+      "lastOut": "23:09",
+      "firstGame": "16:00",
+      "lastGame": "20:00",
+      "preMin": 480,
+      "postMin": 114
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "07:59",
+      "lastOut": "21:57",
+      "firstGame": "19:00",
+      "lastGame": "19:00",
+      "preMin": 661,
+      "postMin": 102
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "08:50",
+      "lastOut": "22:06",
+      "firstGame": "09:30",
+      "lastGame": "20:30",
+      "preMin": 40,
+      "postMin": 21
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:25",
+      "lastOut": "01:15",
+      "firstGame": "10:00",
+      "lastGame": "22:00",
+      "preMin": 35,
+      "postMin": 120
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:30",
+      "lastOut": "01:25",
+      "firstGame": "14:00",
+      "lastGame": "23:30",
+      "preMin": 210,
+      "postMin": 40
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "14:52",
+      "lastOut": "23:30",
+      "firstGame": "14:30",
+      "lastGame": "17:00",
+      "preMin": -22,
+      "postMin": 315
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "10:46",
+      "lastOut": "23:51",
+      "firstGame": "11:00",
+      "lastGame": "16:00",
+      "preMin": 14,
+      "postMin": 396
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "08:15",
+      "lastOut": "23:23",
+      "firstGame": "16:00",
+      "lastGame": "20:00",
+      "preMin": 465,
+      "postMin": 128
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "09:33",
+      "lastOut": "23:27",
+      "firstGame": "14:15",
+      "lastGame": "22:00",
+      "preMin": 282,
+      "postMin": 12
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:22",
+      "lastOut": "00:42",
+      "firstGame": "14:00",
+      "lastGame": "18:30",
+      "preMin": 218,
+      "postMin": 297
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:31",
+      "lastOut": "01:56",
+      "firstGame": "10:00",
+      "lastGame": "22:00",
+      "preMin": 29,
+      "postMin": 161
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:30",
+      "lastOut": "01:06",
+      "firstGame": "11:00",
+      "lastGame": "22:00",
+      "preMin": 30,
+      "postMin": 111
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "11:32",
+      "lastOut": "23:30",
+      "firstGame": "14:00",
+      "lastGame": "20:00",
+      "preMin": 148,
+      "postMin": 135
+    }
+  ],
+  "VPF": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:00",
+      "lastOut": "23:27",
+      "firstGame": "11:30",
+      "lastGame": "19:00",
+      "preMin": 150,
+      "postMin": 192
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:17",
+      "lastOut": "23:59",
+      "firstGame": "15:45",
+      "lastGame": "20:00",
+      "preMin": 388,
+      "postMin": 164
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:30",
+      "lastOut": "23:59",
+      "firstGame": "11:00",
+      "lastGame": "19:00",
+      "preMin": 90,
+      "postMin": 224
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "10:35",
+      "lastOut": "22:23",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": 25,
+      "postMin": 68
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "10:40",
+      "lastOut": "02:13",
+      "firstGame": "10:00",
+      "lastGame": "23:30",
+      "preMin": -40,
+      "postMin": 88
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:30",
+      "lastOut": "01:15",
+      "firstGame": "11:00",
+      "lastGame": "22:00",
+      "preMin": 30,
+      "postMin": 120
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "09:26",
+      "lastOut": "23:06",
+      "firstGame": "11:30",
+      "lastGame": "20:30",
+      "preMin": 124,
+      "postMin": 81
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "09:24",
+      "lastOut": "23:43",
+      "firstGame": "10:45",
+      "lastGame": "19:00",
+      "preMin": 81,
+      "postMin": 208
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:30",
+      "lastOut": "23:45",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": 90,
+      "postMin": 150
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "11:00",
+      "lastOut": "01:06",
+      "firstGame": "12:30",
+      "lastGame": "20:00",
+      "preMin": 90,
+      "postMin": 231
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:41",
+      "lastOut": "23:40",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": 19,
+      "postMin": 145
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "10:35",
+      "lastOut": "02:04",
+      "firstGame": "11:00",
+      "lastGame": "23:00",
+      "preMin": 25,
+      "postMin": 109
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:23",
+      "lastOut": "01:00",
+      "firstGame": "18:30",
+      "lastGame": "23:00",
+      "preMin": 487,
+      "postMin": 45
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "16:45",
+      "lastOut": "23:42",
+      "firstGame": "14:00",
+      "lastGame": "19:30",
+      "preMin": -165,
+      "postMin": 177
+    }
+  ],
+  "SKP": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "10:58",
+      "lastOut": "16:32",
+      "firstGame": "11:10",
+      "lastGame": "20:10",
+      "preMin": 12,
+      "postMin": -293
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:54",
+      "lastOut": "23:48",
+      "firstGame": "11:10",
+      "lastGame": "20:30",
+      "preMin": 76,
+      "postMin": 123
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "10:41",
+      "lastOut": "00:35",
+      "firstGame": "11:30",
+      "lastGame": "16:00",
+      "preMin": 49,
+      "postMin": 440
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:30",
+      "lastOut": "17:23",
+      "firstGame": "12:20",
+      "lastGame": "19:50",
+      "preMin": 170,
+      "postMin": -222
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:30",
+      "lastOut": "01:04",
+      "firstGame": "11:10",
+      "lastGame": "22:30",
+      "preMin": 100,
+      "postMin": 79
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:23",
+      "lastOut": "00:58",
+      "firstGame": "11:10",
+      "lastGame": "21:40",
+      "preMin": 47,
+      "postMin": 123
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "10:31",
+      "lastOut": "22:08",
+      "firstGame": "17:30",
+      "lastGame": "21:20",
+      "preMin": 419,
+      "postMin": -27
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "10:27",
+      "lastOut": "00:14",
+      "firstGame": "18:40",
+      "lastGame": "21:00",
+      "preMin": 493,
+      "postMin": 119
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "11:37",
+      "lastOut": "22:13",
+      "firstGame": "10:00",
+      "lastGame": "17:10",
+      "preMin": -97,
+      "postMin": 228
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:30",
+      "lastOut": "21:53",
+      "firstGame": "11:10",
+      "lastGame": "21:00",
+      "preMin": 100,
+      "postMin": -22
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "16:43",
+      "lastOut": "23:52",
+      "firstGame": "13:00",
+      "lastGame": "21:20",
+      "preMin": -223,
+      "postMin": 77
+    }
+  ],
+  "DW9": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:29",
+      "lastOut": "00:03",
+      "firstGame": "14:30",
+      "lastGame": "20:30",
+      "preMin": 301,
+      "postMin": 138
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:28",
+      "lastOut": "01:48",
+      "firstGame": "13:00",
+      "lastGame": "20:30",
+      "preMin": 212,
+      "postMin": 243
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:38",
+      "lastOut": "23:50",
+      "firstGame": "12:30",
+      "lastGame": "20:15",
+      "preMin": 172,
+      "postMin": 140
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "14:01",
+      "lastOut": "23:26",
+      "firstGame": "13:15",
+      "lastGame": "18:30",
+      "preMin": -46,
+      "postMin": 221
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "11:55",
+      "lastOut": "01:07",
+      "firstGame": "11:30",
+      "lastGame": "22:30",
+      "preMin": -25,
+      "postMin": 82
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:07",
+      "lastOut": "00:50",
+      "firstGame": "12:45",
+      "lastGame": "21:00",
+      "preMin": 158,
+      "postMin": 155
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "09:41",
+      "lastOut": "17:50",
+      "firstGame": "10:00",
+      "lastGame": "19:30",
+      "preMin": 19,
+      "postMin": -175
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:25",
+      "lastOut": "17:51",
+      "firstGame": "13:30",
+      "lastGame": "19:15",
+      "preMin": 245,
+      "postMin": -159
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "10:01",
+      "lastOut": "23:11",
+      "firstGame": "11:00",
+      "lastGame": "18:00",
+      "preMin": 59,
+      "postMin": 236
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:41",
+      "lastOut": "00:40",
+      "firstGame": "10:30",
+      "lastGame": "19:00",
+      "preMin": 49,
+      "postMin": 265
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:13",
+      "lastOut": "01:15",
+      "firstGame": "11:15",
+      "lastGame": "21:30",
+      "preMin": 122,
+      "postMin": 150
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:02",
+      "lastOut": "01:17",
+      "firstGame": "12:30",
+      "lastGame": "19:30",
+      "preMin": 148,
+      "postMin": 272
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:59",
+      "lastOut": "02:15",
+      "firstGame": "14:30",
+      "lastGame": "22:00",
+      "preMin": 271,
+      "postMin": 180
+    }
+  ],
+  "00H": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "08:35",
+      "lastOut": "23:33",
+      "firstGame": "13:30",
+      "lastGame": "19:00",
+      "preMin": 295,
+      "postMin": 198
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:14",
+      "lastOut": "23:00",
+      "firstGame": "10:30",
+      "lastGame": "18:30",
+      "preMin": 16,
+      "postMin": 195
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "11:11",
+      "lastOut": "22:21",
+      "firstGame": "16:00",
+      "lastGame": "19:00",
+      "preMin": 289,
+      "postMin": 126
+    }
+  ],
+  "E3G": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "07:30",
+      "lastOut": "22:20",
+      "firstGame": "19:30",
+      "lastGame": "19:30",
+      "preMin": 720,
+      "postMin": 95
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "07:30",
+      "lastOut": "22:39",
+      "firstGame": "16:30",
+      "lastGame": "19:00",
+      "preMin": 540,
+      "postMin": 144
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "07:30",
+      "lastOut": "23:42",
+      "firstGame": "10:00",
+      "lastGame": "14:30",
+      "preMin": 150,
+      "postMin": 477
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:40",
+      "lastOut": "17:31",
+      "firstGame": "13:30",
+      "lastGame": "19:00",
+      "preMin": 230,
+      "postMin": -164
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:41",
+      "lastOut": "17:49",
+      "firstGame": "10:00",
+      "lastGame": "22:30",
+      "preMin": 19,
+      "postMin": -356
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "13:07",
+      "lastOut": "20:34",
+      "firstGame": "11:00",
+      "lastGame": "22:00",
+      "preMin": -127,
+      "postMin": -161
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "11:40",
+      "lastOut": "17:45",
+      "firstGame": "11:30",
+      "lastGame": "21:00",
+      "preMin": -10,
+      "postMin": -270
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "11:10",
+      "lastOut": "17:17",
+      "firstGame": "12:00",
+      "lastGame": "22:30",
+      "preMin": 50,
+      "postMin": -388
+    }
+  ],
+  "J2M": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:31",
+      "lastOut": "22:47",
+      "firstGame": "16:00",
+      "lastGame": "16:30",
+      "preMin": 389,
+      "postMin": 302
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:29",
+      "lastOut": "20:39",
+      "firstGame": "12:20",
+      "lastGame": "19:00",
+      "preMin": 111,
+      "postMin": 24
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:27",
+      "lastOut": "17:42",
+      "firstGame": "11:30",
+      "lastGame": "20:30",
+      "preMin": 123,
+      "postMin": -243
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "10:18",
+      "lastOut": "17:06",
+      "firstGame": "10:30",
+      "lastGame": "21:20",
+      "preMin": 12,
+      "postMin": -329
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "17:20",
+      "lastOut": "23:17",
+      "firstGame": "10:30",
+      "lastGame": "16:50",
+      "preMin": -410,
+      "postMin": 312
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "15:00",
+      "lastOut": "02:49",
+      "firstGame": "10:30",
+      "lastGame": "23:55",
+      "preMin": -270,
+      "postMin": 99
+    }
+  ],
+  "AY4": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:57",
+      "lastOut": "13:15",
+      "firstGame": "17:30",
+      "lastGame": "17:30",
+      "preMin": 453,
+      "postMin": -330
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:49",
+      "lastOut": "23:29",
+      "firstGame": "11:00",
+      "lastGame": "18:30",
+      "preMin": 11,
+      "postMin": 224
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "13:45",
+      "lastOut": "00:31",
+      "firstGame": "16:30",
+      "lastGame": "20:30",
+      "preMin": 165,
+      "postMin": 166
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "11:11",
+      "lastOut": "22:00",
+      "firstGame": "13:00",
+      "lastGame": "19:00",
+      "preMin": 109,
+      "postMin": 105
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:45",
+      "lastOut": "23:55",
+      "firstGame": "11:00",
+      "lastGame": "21:30",
+      "preMin": 75,
+      "postMin": 70
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "15:20",
+      "lastOut": "23:30",
+      "firstGame": "10:30",
+      "lastGame": "15:30",
+      "preMin": -290,
+      "postMin": 405
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "15:45",
+      "lastOut": "23:28",
+      "firstGame": "11:00",
+      "lastGame": "20:00",
+      "preMin": -285,
+      "postMin": 133
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "14:31",
+      "lastOut": "23:30",
+      "firstGame": "15:00",
+      "lastGame": "21:00",
+      "preMin": 29,
+      "postMin": 75
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "11:00",
+      "lastOut": "22:42",
+      "firstGame": "18:00",
+      "lastGame": "18:00",
+      "preMin": 420,
+      "postMin": 207
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:45",
+      "lastOut": "21:30",
+      "firstGame": "14:30",
+      "lastGame": "14:30",
+      "preMin": 225,
+      "postMin": 345
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:46",
+      "lastOut": "23:00",
+      "firstGame": "11:30",
+      "lastGame": "18:30",
+      "preMin": 104,
+      "postMin": 195
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "09:46",
+      "lastOut": "23:45",
+      "firstGame": "10:00",
+      "lastGame": "21:00",
+      "preMin": 14,
+      "postMin": 90
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "12:30",
+      "lastOut": "23:13",
+      "firstGame": "16:00",
+      "lastGame": "19:00",
+      "preMin": 210,
+      "postMin": 178
+    }
+  ],
+  "ZTA": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "13:18",
+      "lastOut": "22:46",
+      "firstGame": "12:00",
+      "lastGame": "16:30",
+      "preMin": -78,
+      "postMin": 301
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:00",
+      "lastOut": "21:02",
+      "firstGame": "14:10",
+      "lastGame": "18:00",
+      "preMin": 310,
+      "postMin": 107
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "17:00",
+      "lastOut": "22:06",
+      "firstGame": "12:00",
+      "lastGame": "18:00",
+      "preMin": -300,
+      "postMin": 171
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "17:00",
+      "lastOut": "01:45",
+      "firstGame": "11:10",
+      "lastGame": "21:00",
+      "preMin": -350,
+      "postMin": 210
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "14:56",
+      "lastOut": "01:52",
+      "firstGame": "11:10",
+      "lastGame": "21:00",
+      "preMin": -226,
+      "postMin": 217
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "12:00",
+      "lastOut": "22:30",
+      "firstGame": "15:40",
+      "lastGame": "18:40",
+      "preMin": 220,
+      "postMin": 155
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "11:00",
+      "lastOut": "20:25",
+      "firstGame": "17:10",
+      "lastGame": "18:00",
+      "preMin": 370,
+      "postMin": 70
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "11:40",
+      "lastOut": "21:23",
+      "firstGame": "12:00",
+      "lastGame": "16:30",
+      "preMin": 20,
+      "postMin": 218
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:20",
+      "lastOut": "23:03",
+      "firstGame": "15:00",
+      "lastGame": "18:40",
+      "preMin": 280,
+      "postMin": 188
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "09:30",
+      "lastOut": "19:08",
+      "firstGame": "15:40",
+      "lastGame": "21:40",
+      "preMin": 370,
+      "postMin": -227
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:30",
+      "lastOut": "18:57",
+      "firstGame": "12:40",
+      "lastGame": "19:30",
+      "preMin": 190,
+      "postMin": -108
+    }
+  ],
+  "ZTM": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "13:56",
+      "lastOut": "22:37",
+      "firstGame": "09:00",
+      "lastGame": "20:30",
+      "preMin": -296,
+      "postMin": 52
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:50",
+      "lastOut": "23:02",
+      "firstGame": "16:00",
+      "lastGame": "21:00",
+      "preMin": 370,
+      "postMin": 47
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "08:52",
+      "lastOut": "00:26",
+      "firstGame": "16:50",
+      "lastGame": "19:50",
+      "preMin": 478,
+      "postMin": 201
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "10:29",
+      "lastOut": "22:53",
+      "firstGame": "12:00",
+      "lastGame": "20:10",
+      "preMin": 91,
+      "postMin": 88
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "13:35",
+      "lastOut": "02:00",
+      "firstGame": "11:45",
+      "lastGame": "22:00",
+      "preMin": -110,
+      "postMin": 165
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "09:58",
+      "lastOut": "21:08",
+      "firstGame": "10:00",
+      "lastGame": "21:20",
+      "preMin": 2,
+      "postMin": -87
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:58",
+      "lastOut": "17:37",
+      "firstGame": "13:30",
+      "lastGame": "21:00",
+      "preMin": 212,
+      "postMin": -278
+    }
+  ],
+  "ZU8": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "14:35",
+      "lastOut": "22:48",
+      "firstGame": "11:30",
+      "lastGame": "21:00",
+      "preMin": -185,
+      "postMin": 33
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:41",
+      "lastOut": "21:28",
+      "firstGame": "12:00",
+      "lastGame": "15:00",
+      "preMin": 139,
+      "postMin": 313
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "11:34",
+      "lastOut": "20:56",
+      "firstGame": "12:30",
+      "lastGame": "15:00",
+      "preMin": 56,
+      "postMin": 281
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:27",
+      "lastOut": "17:04",
+      "firstGame": "10:00",
+      "lastGame": "21:00",
+      "preMin": 33,
+      "postMin": -311
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "17:17",
+      "lastOut": "01:30",
+      "firstGame": "11:30",
+      "lastGame": "11:30",
+      "preMin": -347,
+      "postMin": 765
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "15:39",
+      "lastOut": "22:50",
+      "firstGame": "16:00",
+      "lastGame": "17:00",
+      "preMin": 21,
+      "postMin": 275
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "13:00",
+      "lastOut": "20:54",
+      "firstGame": "10:30",
+      "lastGame": "19:00",
+      "preMin": -150,
+      "postMin": 39
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:00",
+      "lastOut": "22:29",
+      "firstGame": "16:30",
+      "lastGame": "19:00",
+      "preMin": 450,
+      "postMin": 134
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "09:45",
+      "lastOut": "20:56",
+      "firstGame": "11:30",
+      "lastGame": "19:00",
+      "preMin": 105,
+      "postMin": 41
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "10:15",
+      "lastOut": "20:34",
+      "firstGame": "10:30",
+      "lastGame": "23:30",
+      "preMin": 15,
+      "postMin": -251
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "11:37",
+      "lastOut": "23:01",
+      "firstGame": "14:00",
+      "lastGame": "20:30",
+      "preMin": 143,
+      "postMin": 76
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:44",
+      "lastOut": "21:20",
+      "firstGame": "12:00",
+      "lastGame": "20:00",
+      "preMin": 136,
+      "postMin": 5
+    }
+  ],
+  "ASE": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "10:03",
+      "lastOut": "19:56",
+      "firstGame": "13:00",
+      "lastGame": "21:00",
+      "preMin": 177,
+      "postMin": -139
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:30",
+      "lastOut": "23:11",
+      "firstGame": "14:30",
+      "lastGame": "19:30",
+      "preMin": 300,
+      "postMin": 146
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "11:15",
+      "lastOut": "00:11",
+      "firstGame": "19:00",
+      "lastGame": "19:00",
+      "preMin": 465,
+      "postMin": 236
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:30",
+      "lastOut": "00:01",
+      "firstGame": "10:30",
+      "lastGame": "19:00",
+      "preMin": 60,
+      "postMin": 226
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:30",
+      "lastOut": "00:17",
+      "firstGame": "10:05",
+      "lastGame": "19:30",
+      "preMin": 35,
+      "postMin": 212
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "09:30",
+      "lastOut": "02:52",
+      "firstGame": "17:30",
+      "lastGame": "19:30",
+      "preMin": 480,
+      "postMin": 367
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "12:45",
+      "lastOut": "00:05",
+      "firstGame": "10:30",
+      "lastGame": "19:00",
+      "preMin": -135,
+      "postMin": 230
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "16:48",
+      "lastOut": "00:22",
+      "firstGame": "10:00",
+      "lastGame": "19:00",
+      "preMin": -408,
+      "postMin": 247
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "16:00",
+      "lastOut": "02:17",
+      "firstGame": "16:00",
+      "lastGame": "19:30",
+      "preMin": 0,
+      "postMin": 332
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:30",
+      "lastOut": "00:26",
+      "firstGame": "10:00",
+      "lastGame": "16:00",
+      "preMin": 30,
+      "postMin": 431
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "10:15",
+      "lastOut": "00:29",
+      "firstGame": "18:00",
+      "lastGame": "18:00",
+      "preMin": 465,
+      "postMin": 314
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "09:39",
+      "lastOut": "01:42",
+      "firstGame": "11:00",
+      "lastGame": "20:30",
+      "preMin": 81,
+      "postMin": 237
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:16",
+      "lastOut": "23:06",
+      "firstGame": "18:00",
+      "lastGame": "19:00",
+      "preMin": 524,
+      "postMin": 171
+    }
+  ],
+  "ZUE": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "09:32",
+      "lastOut": "21:44",
+      "firstGame": "10:00",
+      "lastGame": "19:50",
+      "preMin": 28,
+      "postMin": 39
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "11:13",
+      "lastOut": "21:49",
+      "firstGame": "15:40",
+      "lastGame": "19:50",
+      "preMin": 267,
+      "postMin": 44
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "09:46",
+      "lastOut": "22:23",
+      "firstGame": "14:10",
+      "lastGame": "19:30",
+      "preMin": 264,
+      "postMin": 98
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "09:44",
+      "lastOut": "19:41",
+      "firstGame": "10:00",
+      "lastGame": "19:00",
+      "preMin": 16,
+      "postMin": -34
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "09:15",
+      "lastOut": "22:15",
+      "firstGame": "10:00",
+      "lastGame": "21:20",
+      "preMin": 45,
+      "postMin": -20
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "08:00",
+      "lastOut": "23:32",
+      "firstGame": "11:30",
+      "lastGame": "23:10",
+      "preMin": 210,
+      "postMin": -53
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "08:00",
+      "lastOut": "21:10",
+      "firstGame": "10:30",
+      "lastGame": "18:20",
+      "preMin": 150,
+      "postMin": 95
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "08:00",
+      "lastOut": "22:14",
+      "firstGame": "11:00",
+      "lastGame": "17:40",
+      "preMin": 180,
+      "postMin": 199
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:00",
+      "lastOut": "21:57",
+      "firstGame": "15:20",
+      "lastGame": "18:40",
+      "preMin": 380,
+      "postMin": 122
+    },
+    {
+      "date": "2026-06-01",
+      "firstIn": "10:15",
+      "lastOut": "22:13",
+      "firstGame": "12:00",
+      "lastGame": "19:30",
+      "preMin": 105,
+      "postMin": 88
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:45",
+      "lastOut": "22:32",
+      "firstGame": "10:50",
+      "lastGame": "19:00",
+      "preMin": 65,
+      "postMin": 137
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "11:20",
+      "lastOut": "22:33",
+      "firstGame": "10:50",
+      "lastGame": "21:20",
+      "preMin": -30,
+      "postMin": -2
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:45",
+      "lastOut": "23:07",
+      "firstGame": "11:10",
+      "lastGame": "21:20",
+      "preMin": 25,
+      "postMin": 32
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "10:30",
+      "lastOut": "23:34",
+      "firstGame": "10:50",
+      "lastGame": "21:20",
+      "preMin": 20,
+      "postMin": 59
+    }
+  ],
+  "QTV": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "15:45",
+      "lastOut": "23:15",
+      "firstGame": "11:00",
+      "lastGame": "17:30",
+      "preMin": -285,
+      "postMin": 270
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:39",
+      "lastOut": "23:44",
+      "firstGame": "16:00",
+      "lastGame": "20:00",
+      "preMin": 321,
+      "postMin": 149
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "11:06",
+      "lastOut": "22:14",
+      "firstGame": "11:00",
+      "lastGame": "13:00",
+      "preMin": -6,
+      "postMin": 479
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "17:04",
+      "lastOut": "23:37",
+      "firstGame": "11:30",
+      "lastGame": "11:30",
+      "preMin": -334,
+      "postMin": 652
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "11:31",
+      "lastOut": "20:03",
+      "firstGame": "10:00",
+      "lastGame": "19:00",
+      "preMin": -91,
+      "postMin": -12
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "10:35",
+      "lastOut": "17:31",
+      "firstGame": "11:30",
+      "lastGame": "20:30",
+      "preMin": 55,
+      "postMin": -254
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "12:14",
+      "lastOut": "23:27",
+      "firstGame": "14:00",
+      "lastGame": "16:00",
+      "preMin": 106,
+      "postMin": 372
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "10:18",
+      "lastOut": "17:33",
+      "firstGame": "12:30",
+      "lastGame": "18:30",
+      "preMin": 132,
+      "postMin": -132
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:00",
+      "lastOut": "17:35",
+      "firstGame": "11:00",
+      "lastGame": "11:00",
+      "preMin": 120,
+      "postMin": 320
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:28",
+      "lastOut": "17:34",
+      "firstGame": "18:30",
+      "lastGame": "18:30",
+      "preMin": 542,
+      "postMin": -131
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "09:10",
+      "lastOut": "00:24",
+      "firstGame": "10:00",
+      "lastGame": "20:00",
+      "preMin": 50,
+      "postMin": 189
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:36",
+      "lastOut": "23:54",
+      "firstGame": "14:30",
+      "lastGame": "21:30",
+      "preMin": 234,
+      "postMin": 69
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "16:42",
+      "lastOut": "22:03",
+      "firstGame": "14:00",
+      "lastGame": "20:00",
+      "preMin": -162,
+      "postMin": 48
+    }
+  ],
+  "RX8": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "14:42",
+      "lastOut": "20:05",
+      "firstGame": "11:00",
+      "lastGame": "14:00",
+      "preMin": -222,
+      "postMin": 290
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:22",
+      "lastOut": "21:41",
+      "firstGame": "11:00",
+      "lastGame": "18:30",
+      "preMin": 38,
+      "postMin": 116
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "14:50",
+      "lastOut": "22:13",
+      "firstGame": "16:00",
+      "lastGame": "16:00",
+      "preMin": 70,
+      "postMin": 298
+    }
+  ],
+  "LYC": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "10:55",
+      "lastOut": "22:06",
+      "firstGame": "14:00",
+      "lastGame": "14:30",
+      "preMin": 185,
+      "postMin": 381
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "09:29",
+      "lastOut": "21:47",
+      "firstGame": "11:00",
+      "lastGame": "19:00",
+      "preMin": 91,
+      "postMin": 92
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "10:57",
+      "lastOut": "00:17",
+      "firstGame": "15:30",
+      "lastGame": "15:30",
+      "preMin": 273,
+      "postMin": 452
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "10:23",
+      "lastOut": "21:45",
+      "firstGame": "11:30",
+      "lastGame": "20:00",
+      "preMin": 67,
+      "postMin": 30
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "16:48",
+      "lastOut": "22:42",
+      "firstGame": "11:00",
+      "lastGame": "22:00",
+      "preMin": -348,
+      "postMin": -33
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "08:00",
+      "lastOut": "16:00",
+      "firstGame": "16:00",
+      "lastGame": "20:00",
+      "preMin": 480,
+      "postMin": -315
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "08:00",
+      "lastOut": "16:43",
+      "firstGame": "14:00",
+      "lastGame": "21:30",
+      "preMin": 360,
+      "postMin": -362
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "08:00",
+      "lastOut": "21:55",
+      "firstGame": "17:00",
+      "lastGame": "20:30",
+      "preMin": 540,
+      "postMin": 10
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "08:00",
+      "lastOut": "16:00",
+      "firstGame": "13:00",
+      "lastGame": "17:30",
+      "preMin": 300,
+      "postMin": -165
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "09:33",
+      "lastOut": "22:04",
+      "firstGame": "10:00",
+      "lastGame": "16:00",
+      "preMin": 27,
+      "postMin": 289
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "16:49",
+      "lastOut": "22:30",
+      "firstGame": "12:30",
+      "lastGame": "20:30",
+      "preMin": -259,
+      "postMin": 45
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "10:31",
+      "lastOut": "23:37",
+      "firstGame": "13:00",
+      "lastGame": "20:30",
+      "preMin": 149,
+      "postMin": 112
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "09:42",
+      "lastOut": "17:38",
+      "firstGame": "17:30",
+      "lastGame": "18:30",
+      "preMin": 468,
+      "postMin": -127
+    }
+  ],
+  "MW2": [
+    {
+      "date": "2026-06-10",
+      "firstIn": "12:25",
+      "lastOut": "21:50",
+      "firstGame": "11:00",
+      "lastGame": "19:00",
+      "preMin": -85,
+      "postMin": 95
+    },
+    {
+      "date": "2026-06-09",
+      "firstIn": "10:58",
+      "lastOut": "22:35",
+      "firstGame": "14:30",
+      "lastGame": "20:30",
+      "preMin": 212,
+      "postMin": 50
+    },
+    {
+      "date": "2026-06-08",
+      "firstIn": "11:01",
+      "lastOut": "21:38",
+      "firstGame": "14:00",
+      "lastGame": "17:15",
+      "preMin": 179,
+      "postMin": 188
+    },
+    {
+      "date": "2026-06-07",
+      "firstIn": "10:26",
+      "lastOut": "22:54",
+      "firstGame": "16:00",
+      "lastGame": "20:30",
+      "preMin": 334,
+      "postMin": 69
+    },
+    {
+      "date": "2026-06-06",
+      "firstIn": "10:41",
+      "lastOut": "23:43",
+      "firstGame": "11:30",
+      "lastGame": "20:30",
+      "preMin": 49,
+      "postMin": 118
+    },
+    {
+      "date": "2026-06-05",
+      "firstIn": "16:41",
+      "lastOut": "00:06",
+      "firstGame": "12:30",
+      "lastGame": "15:30",
+      "preMin": -251,
+      "postMin": 441
+    },
+    {
+      "date": "2026-06-04",
+      "firstIn": "10:41",
+      "lastOut": "21:20",
+      "firstGame": "11:00",
+      "lastGame": "17:30",
+      "preMin": 19,
+      "postMin": 155
+    },
+    {
+      "date": "2026-06-03",
+      "firstIn": "15:04",
+      "lastOut": "17:07",
+      "firstGame": "14:30",
+      "lastGame": "20:30",
+      "preMin": -34,
+      "postMin": -278
+    },
+    {
+      "date": "2026-06-02",
+      "firstIn": "09:00",
+      "lastOut": "22:22",
+      "firstGame": "14:30",
+      "lastGame": "19:00",
+      "preMin": 330,
+      "postMin": 127
+    },
+    {
+      "date": "2026-05-31",
+      "firstIn": "10:43",
+      "lastOut": "23:05",
+      "firstGame": "13:00",
+      "lastGame": "20:30",
+      "preMin": 137,
+      "postMin": 80
+    },
+    {
+      "date": "2026-05-30",
+      "firstIn": "10:41",
+      "lastOut": "23:57",
+      "firstGame": "12:30",
+      "lastGame": "21:30",
+      "preMin": 109,
+      "postMin": 72
+    },
+    {
+      "date": "2026-05-29",
+      "firstIn": "12:11",
+      "lastOut": "21:51",
+      "firstGame": "12:30",
+      "lastGame": "21:30",
+      "preMin": 19,
+      "postMin": -54
+    },
+    {
+      "date": "2026-05-28",
+      "firstIn": "17:13",
+      "lastOut": "23:03",
+      "firstGame": "11:30",
+      "lastGame": "20:30",
+      "preMin": -343,
+      "postMin": 78
+    }
+  ]
+};
+
+// ─── COVERAGE HELPERS ────────────────────────────────────────────────────────
+function fmtMins(m) {
+  if (m == null) return '—';
+  const abs = Math.abs(m);
+  const h = Math.floor(abs / 60);
+  const min = abs % 60;
+  const sign = m < 0 ? '-' : '+';
+  if (h > 0 && min > 0) return sign + h + 'h ' + min + 'm';
+  if (h > 0)            return sign + h + 'h';
+  return sign + min + 'm';
+}
+
+function preClass(m) {
+  if (m == null) return '';
+  if (m <= 90)   return 'pre-ok';
+  if (m <= 180)  return 'pre-warn';
+  return 'pre-late';
+}
+
+function buildCoveragePanel(adpCode) {
+  const days = COVERAGE_DATA[adpCode];
+  let inner = '';
+  if (!days || days.length === 0) {
+    inner = '<div class="coverage-empty">Coverage data not yet available for this location</div>';
+  } else {
+    const rows = days.slice(0, 14).map(d => {
+      const pClass = preClass(d.preMin);
+      const postCls = (d.postMin != null && d.postMin < 0) ? 'post-neg' : 'post-ok';
+      return `<tr>
+        <td>${d.date.slice(5)}</td>
+        <td>${d.firstGame}</td>
+        <td>${d.lastGame}</td>
+        <td>${d.firstIn}</td>
+        <td>${d.lastOut}</td>
+        <td class="${pClass}">${fmtMins(d.preMin)}</td>
+        <td class="${postCls}">${fmtMins(d.postMin)}</td>
+      </tr>`;
+    }).join('');
+    inner = `<table class="coverage-table">
+      <thead><tr>
+        <th>Date</th><th>1st Game</th><th>Last Game</th>
+        <th>1st In</th><th>Last Out</th>
+        <th>Pre-Open</th><th>Post-Close</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+  return `<div class="coverage-inner">
+    <div class="coverage-title">Coverage · Last 14 Days</div>
+    ${inner}
+  </div>`;
+}
+
+// ─── COVERAGE TOGGLE ─────────────────────────────────────────────────────────
+let activeCoverageAdp = null;
+
+function setupCoverageClicks() {
+  document.getElementById('storeContainer').addEventListener('click', function(e) {
+    const card = e.target.closest('.store-card');
+    if (!card) return;
+    const adpCode = card.dataset.adp;
+    if (!adpCode) return;
+
+    // Find existing panel sibling
+    const existingPanel = card.nextElementSibling;
+    const isOpen = existingPanel && existingPanel.classList.contains('coverage-panel');
+
+    // Close all open panels first
+    document.querySelectorAll('.coverage-panel').forEach(p => p.remove());
+    document.querySelectorAll('.store-card.card-expanded').forEach(c => c.classList.remove('card-expanded'));
+
+    if (!isOpen || activeCoverageAdp !== adpCode) {
+      // Open this one
+      activeCoverageAdp = adpCode;
+      card.classList.add('card-expanded');
+      const panel = document.createElement('div');
+      panel.className = 'coverage-panel';
+      panel.innerHTML = buildCoveragePanel(adpCode);
+      card.insertAdjacentElement('afterend', panel);
+    } else {
+      activeCoverageAdp = null;
+    }
+  });
+}
+
+// Re-close panels on grid re-render, then re-init
+const _origRenderGrid = renderGrid;
+// We override renderGrid to also close panels (they'll be wiped by innerHTML anyway)
+// and re-run after render
+const _origApplyView = applyView;
+
+setupCoverageClicks();
 </script>
 </body>
 </html>
