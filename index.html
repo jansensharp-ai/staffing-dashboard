@@ -29,191 +29,160 @@
   header h1 { font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
   header .subtitle { font-size: 13px; color: #64748b; margin-top: 3px; }
 
-  .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .report-date { font-size: 22px; font-weight: 700; color: #f1f5f9; }
-  .report-label { font-size: 11px; color: #475569; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .report-date  { font-size: 20px; font-weight: 700; color: #f1f5f9; text-align: right; }
+  .report-label { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; text-align: right; }
 
-  /* Date nav */
   .date-nav {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #0f1117;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    padding: 4px 8px;
+    display: flex; align-items: center; gap: 8px;
+    background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 4px 8px;
   }
   .date-nav-btn {
-    background: none;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    padding: 2px 4px;
-    border-radius: 4px;
-    transition: color 0.15s;
+    background: none; border: none; color: #64748b; cursor: pointer;
+    font-size: 16px; padding: 2px 6px; border-radius: 4px; transition: color 0.15s;
   }
   .date-nav-btn:hover:not(:disabled) { color: #f1f5f9; }
   .date-nav-btn:disabled { color: #1e2535; cursor: default; }
-  .date-nav-label { font-size: 13px; font-weight: 600; color: #f1f5f9; min-width: 90px; text-align: center; }
+  .date-nav-label { font-size: 13px; font-weight: 600; color: #f1f5f9; min-width: 72px; text-align: center; }
 
-  /* Toggle */
   .view-toggle {
-    display: flex;
-    background: #0f1117;
-    border: 1px solid #1e2535;
-    border-radius: 8px;
-    padding: 3px;
-    gap: 2px;
+    display: flex; background: #161b27; border: 1px solid #1e2535; border-radius: 8px; padding: 3px; gap: 2px;
   }
   .toggle-btn {
-    padding: 5px 16px;
-    border-radius: 6px;
-    border: none;
-    background: transparent;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
+    padding: 5px 14px; border-radius: 6px; border: none; background: transparent;
+    color: #64748b; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s;
   }
   .toggle-btn.active { background: #1e2535; color: #f1f5f9; }
   .toggle-btn:hover:not(.active) { color: #94a3b8; }
 
-  .no-adp-banner {
-    background: #1c1a10;
-    border: 1px solid #3d3308;
-    border-radius: 8px;
-    padding: 10px 16px;
-    margin-bottom: 20px;
-    font-size: 13px;
-    color: #d4a929;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .zone-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
+  .zone-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
   .zone-tab {
-    padding: 5px 14px;
-    border-radius: 20px;
-    border: 1px solid #1e2535;
-    background: transparent;
-    color: #94a3b8;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.15s;
+    padding: 5px 16px; border-radius: 20px; border: 1px solid #1e2535;
+    background: transparent; color: #94a3b8; font-size: 13px; cursor: pointer; transition: all 0.15s;
   }
   .zone-tab:hover { border-color: #334155; color: #cbd5e1; }
   .zone-tab.active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
 
+  /* Grid — 4 cols on wide screens */
   .store-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
   }
 
+  /* Card */
   .store-card {
     background: #161b27;
     border: 1px solid #1e2535;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
   }
 
   .card-header {
-    padding: 14px 16px 12px;
+    padding: 12px 14px 10px;
     border-bottom: 1px solid #1e2535;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
   }
-
-  .store-name { font-size: 15px; font-weight: 700; color: #f1f5f9; }
-  .store-region { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .store-name { font-size: 14px; font-weight: 700; color: #f1f5f9; }
+  .store-zone { font-size: 11px; color: #475569; margin-top: 2px; }
 
   .status-badge {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-    flex-shrink: 0;
+    font-size: 10px; font-weight: 600; padding: 2px 8px;
+    border-radius: 10px; white-space: nowrap; flex-shrink: 0;
   }
   .status-mature  { background: #052e16; color: #34d399; border: 1px solid #065f46; }
   .status-ramping { background: #1e1a05; color: #fbbf24; border: 1px solid #713f12; }
   .status-new     { background: #0f172a; color: #94a3b8; border: 1px solid #1e2535; }
 
-  .card-body { padding: 14px 16px; }
-
-  /* Main KPI row */
-  .kpi-grid {
+  /* Three metric panels */
+  .card-body {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 12px;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  .kpi {
-    background: #0f1117;
-    border: 1px solid #1e2535;
-    border-radius: 7px;
-    padding: 9px 11px;
-  }
-  .kpi.kpi-bg-good { background: rgba(45,212,191,0.10); border-color: rgba(45,212,191,0.25); }
-  .kpi.kpi-bg-warn { background: rgba(245,158,11,0.10); border-color: rgba(245,158,11,0.25); }
-  .kpi.kpi-bg-over { background: rgba(251,113,133,0.12); border-color: rgba(251,113,133,0.28); }
-
-  .kpi-label { font-size: 11px; font-weight: 500; color: #94a3b8; margin-bottom: 5px; letter-spacing: 0; }
-  .kpi.kpi-bg-good .kpi-label { color: rgba(45,212,191,0.7); }
-  .kpi.kpi-bg-warn .kpi-label { color: rgba(245,158,11,0.7); }
-  .kpi.kpi-bg-over .kpi-label { color: rgba(251,113,133,0.7); }
-
-  .kpi-value { font-size: 19px; font-weight: 700; color: #f1f5f9; line-height: 1; }
-  .kpi-sub   { font-size: 10px; color: #64748b; margin-top: 3px; }
-  .kpi-pending { font-size: 13px; font-weight: 600; color: #475569; }
-
-  /* Labor cost row */
-  .labor-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .labor-cell {
-    background: #0f1117;
-    border: 1px solid #1e2535;
-    border-radius: 7px;
-    padding: 8px 10px;
-  }
-  .labor-label { font-size: 11px; font-weight: 500; color: #94a3b8; margin-bottom: 3px; }
-  .labor-value { font-size: 14px; font-weight: 700; color: #f1f5f9; }
-  .labor-pending { font-size: 12px; font-weight: 500; color: #334155; }
-
-  /* Labor % bar */
-  .pct-row {
+  .metric {
+    padding: 14px 12px;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    gap: 4px;
+    border-right: 1px solid #1e2535;
+  }
+  .metric:last-child { border-right: none; }
+
+  .metric-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #64748b;
   }
 
-  .pct-label { font-size: 11px; color: #64748b; white-space: nowrap; }
-  .pct-bar-track { flex: 1; height: 5px; background: #1e2535; border-radius: 3px; overflow: hidden; }
-  .pct-bar-fill  { height: 100%; border-radius: 3px; transition: width 0.4s; }
-  .pct-good  { background: #2dd4bf; }
-  .pct-warn  { background: #f59e0b; }
-  .pct-over  { background: #fb7185; }
-  .pct-value { font-size: 12px; font-weight: 700; white-space: nowrap; min-width: 36px; text-align: right; }
-  .pct-goal  { font-size: 10px; color: #475569; white-space: nowrap; }
-  .pct-none  { font-size: 11px; color: #334155; font-style: italic; }
+  .metric-value {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    color: #f1f5f9;
+  }
+
+  .metric-sub {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+  }
+
+  /* Status panel fills entire cell */
+  .metric-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    gap: 4px;
+  }
+
+  .status-yes {
+    background: rgba(45,212,191,0.12);
+    border-left: 1px solid rgba(45,212,191,0.2);
+  }
+  .status-close {
+    background: rgba(245,158,11,0.10);
+    border-left: 1px solid rgba(245,158,11,0.2);
+  }
+  .status-no {
+    background: rgba(251,113,133,0.12);
+    border-left: 1px solid rgba(251,113,133,0.24);
+  }
+  .status-unknown {
+    background: transparent;
+    border-left: 1px solid #1e2535;
+  }
+
+  .status-word {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+  }
+  .status-yes   .status-word { color: #2dd4bf; }
+  .status-close .status-word { color: #f59e0b; }
+  .status-no    .status-word { color: #fb7185; }
+  .status-unknown .status-word { color: #334155; }
+
+  .status-sublabel {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #64748b;
+    text-align: center;
+  }
+  .status-yes   .status-sublabel { color: rgba(45,212,191,0.6); }
+  .status-close .status-sublabel { color: rgba(245,158,11,0.6); }
+  .status-no    .status-sublabel { color: rgba(251,113,133,0.6); }
+
+  .pending { font-size: 14px; font-weight: 600; color: #334155; }
 </style>
 </head>
 <body>
@@ -221,10 +190,10 @@
 <header>
   <div>
     <h1>GBGS Staffing Dashboard</h1>
-    <div class="subtitle">Daily Labor Costs · Games Run · Hours per Game</div>
+    <div class="subtitle">Labor Cost % · Hours per Game · Staffing Status</div>
   </div>
   <div class="header-right">
-    <div style="display:flex;align-items:center;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end">
       <div class="view-toggle">
         <button class="toggle-btn active" data-view="daily">Daily</button>
         <button class="toggle-btn" data-view="mtd">MTD</button>
@@ -245,16 +214,11 @@
   </div>
 </header>
 
-<div class="no-adp-banner" id="adpBanner" style="display:none">
-  ⚠ ADP labor data not yet loaded for this date. Showing game counts and revenue only.
-</div>
-
 <div class="zone-tabs" id="zoneTabs"></div>
 <div class="store-grid" id="storeGrid"></div>
 
 <script>
 // ─── STORE DEFINITIONS ───────────────────────────────────────────────────────
-// Maps ADP code → store info including DW name for reference
 const STORES = [
   // Zone C
   { adp: "LUE", name: "GBGS Opry",               zone: "C", status: "Mature",  mgmtCost: 123.29, laborPctGoal: 18.80 },
@@ -268,7 +232,7 @@ const STORES = [
   { adp: "DW9", name: "GBGS Times Square",        zone: "A", status: "New",     mgmtCost: 197.25, laborPctGoal: 20.00 },
   { adp: "00H", name: "GBGS Birmingham",          zone: "A", status: "New",     mgmtCost: 143.83, laborPctGoal: 28.00 },
   { adp: "E3G", name: "GBGS Orlando",             zone: "A", status: "New",     mgmtCost: 136.99, laborPctGoal: 35.00 },
-  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", status: "New",     mgmtCost:  136.99, laborPctGoal: 50.00 },
+  { adp: "E3Q", name: "GBGS Atlanta",             zone: "A", status: "New",     mgmtCost: 136.99, laborPctGoal: 50.00 },
   // Zone B
   { adp: "AY4", name: "GBGS MOA",                 zone: "B", status: "Ramping", mgmtCost: 150.68, laborPctGoal: 29.87 },
   { adp: "ZTA", name: "GBGS SF Wharf",            zone: "B", status: "Ramping", mgmtCost:   0.00, laborPctGoal: 39.39 },
@@ -284,8 +248,6 @@ const STORES = [
 ];
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
-// history: one entry per uploaded ADP report day (Claude appends on each update)
-// mtdDW: cumulative game counts + revenue from the data warehouse (always accurate)
 const DATA = {
   month: "June 2026",
   history: [
@@ -371,8 +333,6 @@ const DATA = {
       }
     }
   ],
-  // Snowflake-sourced historical periods (labor = hourly only, mgmt added in JS)
-  // YTD: 2026-01-01 to 2026-06-03 (154 days)
   ytd: {
     label: "YTD 2026", days: 154,
     stores: {
@@ -400,7 +360,6 @@ const DATA = {
       "MW2": { games: 1112, revenue: 439913.59, laborHours: 4926.54,  laborCost: 108505.76 },
     }
   },
-  // PY: 2025-01-01 to 2025-06-02 (same period prior year)
   py: {
     label: "PY (Jan–Jun 2025)", days: 153,
     stores: {
@@ -428,7 +387,6 @@ const DATA = {
       "MW2": { games: 0,    revenue: 0,         laborHours: 0,        laborCost: 0         },
     }
   },
-  // Trailing Quarter: 2026-03-05 to 2026-06-03 (91 days)
   tq: {
     label: "Trailing Qtr (Mar 5 – Jun 3)", days: 91,
     stores: {
@@ -456,7 +414,6 @@ const DATA = {
       "MW2": { games: 677,  revenue: 266077.90, laborHours: 2973.79,  laborCost: 65781.92  },
     }
   },
-  // DW-sourced MTD totals — games and revenue are always accurate here
   mtdDW: {
     "LUE": { games: 21, revenue: 3358.16  },
     "ZZV": { games: 24, revenue: 4541.28  },
@@ -484,9 +441,13 @@ const DATA = {
 };
 
 // ─── DATA HELPERS ────────────────────────────────────────────────────────────
+let currentView = "daily";
+let currentZone = "All";
+let currentDayIndex = DATA.history.length - 1;
+
 function getDailyData() {
-  const last = DATA.history[DATA.history.length - 1];
-  return { date: last.date, stores: last.stores };
+  const day = DATA.history[currentDayIndex];
+  return { date: day.date, stores: day.stores, days: 1 };
 }
 
 function getMTDData() {
@@ -520,177 +481,86 @@ function getSnowflakeData(key) {
   return { date: src.label, stores, days: src.days };
 }
 
-// ─── RENDER ──────────────────────────────────────────────────────────────────
-function fmt$(n) {
-  if (n == null) return null;
-  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
-
-function fmtHrs(n) {
-  if (n == null) return null;
-  return n.toFixed(2) + ' hrs';
-}
-
-function pctClass(pct, goal) {
-  if (pct == null || goal == null) return '';
-  const ratio = pct / goal;
-  if (ratio <= 1.05) return 'pct-good';
-  if (ratio <= 1.20) return 'pct-warn';
-  return 'pct-over';
-}
-
-function kpiBgClass(pct, goal) {
-  if (pct == null || goal == null) return '';
-  const ratio = pct / goal;
-  if (ratio <= 1.05) return 'kpi-bg-good';
-  if (ratio <= 1.20) return 'kpi-bg-warn';
-  return 'kpi-bg-over';
-}
-
+// ─── CARD BUILDER ────────────────────────────────────────────────────────────
 function buildCard(store) {
   const d = (window.__activeStores || {})[store.adp] || {};
   const games     = d.games ?? 0;
   const revenue   = d.revenue ?? 0;
   const laborHrs  = d.laborHours;
   const laborCost = d.laborCost;
-  // Mgmt cost is a daily rate — multiply by period length
   const periodDays = window.__activePeriodDays ?? 1;
-  const mgmt = store.mgmtCost != null ? store.mgmtCost * periodDays : null;
-  const totalCost = (laborCost != null) ? laborCost + mgmt : null;
-  const hpg       = (laborHrs != null && games > 0) ? (laborHrs / games).toFixed(2) : null;
-  const laborPct  = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
-  const goal      = store.laborPctGoal;
-  const goalCost  = (goal != null && revenue > 0) ? (goal / 100 * revenue) : null;
-  const dollarVar = (totalCost != null && goalCost != null) ? (totalCost - goalCost) : null;
+  const mgmt = store.mgmtCost != null ? store.mgmtCost * periodDays : 0;
+  const totalCost = laborCost != null ? laborCost + mgmt : null;
+  const hpg = (laborHrs != null && games > 0) ? (laborHrs / games) : null;
+  const laborPct = (totalCost != null && revenue > 0) ? (totalCost / revenue * 100) : null;
+  const goal = store.laborPctGoal;
 
-  // status badge
-  const statusClass = `status-${store.status.toLowerCase()}`;
-
-  // KPI: Games, Revenue, Hours/Game
-  const kpiGames = `<div class="kpi">
-    <div class="kpi-label">Games Run</div>
-    <div class="kpi-value">${games}</div>
-    <div class="kpi-sub">${fmt$(revenue) ?? '—'} rev</div>
-  </div>`;
-
-  const kpiHPG = laborHrs != null
-    ? `<div class="kpi">
-        <div class="kpi-label">Hrs / Game</div>
-        <div class="kpi-value">${hpg ?? '—'}</div>
-        <div class="kpi-sub">${fmtHrs(laborHrs)} total</div>
-       </div>`
-    : `<div class="kpi">
-        <div class="kpi-label">Hrs / Game</div>
-        <div class="kpi-pending">—</div>
-        <div class="kpi-sub">awaiting ADP</div>
-       </div>`;
-
-  const kpiPct = laborPct != null
-    ? `<div class="kpi ${kpiBgClass(laborPct, goal)}">
-        <div class="kpi-label">Labor % of Rev</div>
-        <div class="kpi-value">${laborPct.toFixed(1)}%</div>
-        <div class="kpi-sub">goal ${goal != null ? goal.toFixed(1)+'%' : '—'}</div>
-       </div>`
-    : `<div class="kpi">
-        <div class="kpi-label">Labor % of Rev</div>
-        <div class="kpi-pending">—</div>
-        <div class="kpi-sub">awaiting ADP</div>
-       </div>`;
-
-  // Labor detail row
-  const laborRow = `
-    <div class="labor-row">
-      <div class="labor-cell">
-        <div class="labor-label">Hourly Cost</div>
-        ${laborCost != null
-          ? `<div class="labor-value">${fmt$(laborCost)}</div>`
-          : `<div class="labor-pending">—</div>`}
-      </div>
-      <div class="labor-cell">
-        <div class="labor-label">Mgmt Cost</div>
-        <div class="labor-value">${fmt$(mgmt)}</div>
-      </div>
-      <div class="labor-cell">
-        <div class="labor-label">Total Labor</div>
-        ${totalCost != null
-          ? `<div class="labor-value">${fmt$(totalCost)}</div>`
-          : `<div class="labor-pending">—</div>`}
-      </div>
-      <div class="labor-cell">
-        <div class="labor-label">Revenue</div>
-        <div class="labor-value">${fmt$(revenue) ?? '—'}</div>
-      </div>
-    </div>`;
-
-  // Labor % bar + dollar variance
-  let pctBar;
+  // Status: YES = under/at goal, CLOSE = 5–20% over, NO = >20% over
+  let statusClass = 'status-unknown';
+  let statusWord = '—';
+  let statusSub = 'Under Goal?';
   if (laborPct != null && goal != null) {
-    const cls = pctClass(laborPct, goal);
-    const maxPct = Math.max(laborPct, goal) * 1.2;
-    const wActual = laborPct / maxPct * 100;
-    const wGoal   = goal / maxPct * 100;
-    const varAbs  = Math.abs(dollarVar).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const varLabel = dollarVar > 0
-      ? `<span style="background:rgba(251,113,133,0.12);border:1px solid rgba(251,113,133,0.28);color:#fda4af;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">$${varAbs} over</span>`
-      : dollarVar < 0
-        ? `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">$${varAbs} under</span>`
-        : `<span style="background:rgba(45,212,191,0.10);border:1px solid rgba(45,212,191,0.25);color:#5eead4;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600">On target</span>`;
-    const bgStyle = cls === 'pct-good'
-      ? 'background:rgba(45,212,191,0.08);border:1px solid rgba(45,212,191,0.2)'
-      : cls === 'pct-warn'
-        ? 'background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2)'
-        : 'background:rgba(251,113,133,0.10);border:1px solid rgba(251,113,133,0.24)';
-    const textColor = cls === 'pct-good' ? '#5eead4' : cls === 'pct-warn' ? '#fcd34d' : '#fda4af';
-    const barColor  = cls === 'pct-good' ? 'rgba(45,212,191,0.5)' : cls === 'pct-warn' ? 'rgba(245,158,11,0.5)' : 'rgba(251,113,133,0.5)';
+    const ratio = laborPct / goal;
+    if (ratio <= 1.05)      { statusClass = 'status-yes';   statusWord = 'YES';   }
+    else if (ratio <= 1.20) { statusClass = 'status-close'; statusWord = 'CLOSE'; }
+    else                    { statusClass = 'status-no';    statusWord = 'NO';    }
+  }
 
-    pctBar = `<div style="${bgStyle};border-radius:8px;padding:10px 12px">
-      <div style="font-size:11px;font-weight:500;color:${textColor};margin-bottom:8px">Labor % of Revenue</div>
-      <div style="margin-bottom:8px">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:4px">
-          <span>0%</span><span>goal ${goal.toFixed(1)}%</span><span>${maxPct.toFixed(0)}%</span>
-        </div>
-        <div class="pct-bar-track" style="height:6px;position:relative;background:rgba(255,255,255,0.08)">
-          <div style="height:100%;border-radius:3px;width:${wActual}%;background:${barColor}"></div>
-          <div style="position:absolute;top:-2px;bottom:-2px;left:${wGoal}%;width:2px;background:rgba(255,255,255,0.3);border-radius:1px"></div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:6px">
-          <span style="font-size:20px;font-weight:700;color:${textColor}">${laborPct.toFixed(1)}%</span>
-          <span style="font-size:11px;color:rgba(255,255,255,0.35)">vs ${goal.toFixed(1)}% goal</span>
-        </div>
-        ${varLabel}
-      </div>
-    </div>`;
-  } else if (laborPct != null) {
-    const cls = 'pct-good';
-    pctBar = `<div class="pct-row">
-      <div class="pct-label">Labor % Rev</div>
-      <div class="pct-bar-track"><div class="pct-bar-fill ${cls}" style="width:${Math.min(laborPct,60)/60*100}%"></div></div>
-      <div class="pct-value ${cls}">${laborPct.toFixed(1)}%</div>
-      <div class="pct-goal">no goal set</div>
-    </div>`;
+  const statusClass2 = store.status.toLowerCase();
+
+  // Labor % panel
+  let pctDisplay, pctSub;
+  if (laborPct != null) {
+    pctDisplay = `${laborPct.toFixed(1)}%`;
+    pctSub = goal != null ? `goal ${goal.toFixed(1)}%` : 'no goal set';
   } else {
-    pctBar = `<div class="pct-row"><div class="pct-none">Upload ADP report to see labor % of revenue</div></div>`;
+    pctDisplay = null;
+    pctSub = 'awaiting ADP';
+  }
+
+  // Hrs/Game panel
+  let hpgDisplay, hpgSub;
+  if (hpg != null) {
+    hpgDisplay = hpg.toFixed(2);
+    hpgSub = `${games} games`;
+  } else {
+    hpgDisplay = null;
+    hpgSub = games > 0 ? 'awaiting ADP' : 'no games';
   }
 
   return `
   <div class="store-card" data-zone="${store.zone}">
     <div class="card-header">
       <div>
-        <div class="store-name">${store.name}</div>
-        <div class="store-region">Zone ${store.zone} · ADP: ${store.adp}</div>
+        <div class="store-name">${store.name.replace('GBGS ', '')}</div>
+        <div class="store-zone">Zone ${store.zone}</div>
       </div>
-      <div class="status-badge ${statusClass}">${store.status}</div>
+      <div class="status-badge status-${statusClass2}">${store.status}</div>
     </div>
     <div class="card-body">
-      <div class="kpi-grid">${kpiGames}${kpiHPG}${kpiPct}</div>
-      ${laborRow}
-      ${pctBar}
+      <div class="metric">
+        <div class="metric-label">Labor % Rev</div>
+        ${pctDisplay
+          ? `<div class="metric-value">${pctDisplay}</div>`
+          : `<div class="pending">—</div>`}
+        <div class="metric-sub">${pctSub}</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Hrs / Game</div>
+        ${hpgDisplay
+          ? `<div class="metric-value">${hpgDisplay}</div>`
+          : `<div class="pending">—</div>`}
+        <div class="metric-sub">${hpgSub}</div>
+      </div>
+      <div class="metric-status ${statusClass}">
+        <div class="status-sublabel">Under Goal?</div>
+        <div class="status-word">${statusWord}</div>
+      </div>
     </div>
   </div>`;
 }
 
+// ─── RENDER ──────────────────────────────────────────────────────────────────
 function buildTabs() {
   const tabs = document.getElementById("zoneTabs");
   tabs.innerHTML = ["All","A","B","C"].map((z, i) =>
@@ -711,23 +581,12 @@ function renderGrid(zone = "All") {
   document.getElementById("storeGrid").innerHTML = filtered.map(buildCard).join('');
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-let currentView = "daily";
-let currentZone = "All";
-let currentDayIndex = DATA.history.length - 1; // start on most recent
-
-function getDailyData() {
-  const day = DATA.history[currentDayIndex];
-  return { date: day.date, stores: day.stores, days: 1 };
-}
-
 function updateDateNav() {
   const isDaily = currentView === "daily";
-  const nav = document.getElementById("dateNav");
-  nav.style.display = isDaily ? "flex" : "none";
+  document.getElementById("dateNav").style.display = isDaily ? "flex" : "none";
   if (!isDaily) return;
   const day = DATA.history[currentDayIndex];
-  document.getElementById("dateNavLabel").textContent = day.date.slice(5); // MM-DD
+  document.getElementById("dateNavLabel").textContent = day.date.slice(5);
   document.getElementById("datePrev").disabled = currentDayIndex === 0;
   document.getElementById("dateNext").disabled = currentDayIndex === DATA.history.length - 1;
 }
@@ -739,7 +598,7 @@ function applyView() {
   else                               d = getSnowflakeData(currentView);
 
   const labels = { daily: "Report Date", mtd: `MTD · ${DATA.month}`, tq: "Trailing Quarter", ytd: "Year to Date", py: "Prior Year" };
-  document.getElementById("reportDate").textContent = d.date;
+  document.getElementById("reportDate").textContent  = d.date;
   document.getElementById("reportLabel").textContent = labels[currentView];
   window.__activeStores     = d.stores;
   window.__activePeriodDays = d.days ?? 1;
@@ -757,7 +616,7 @@ document.querySelector(".view-toggle").addEventListener("click", e => {
   applyView();
 });
 
-// Date nav arrows
+// Date arrows
 document.getElementById("datePrev").addEventListener("click", () => {
   if (currentDayIndex > 0) { currentDayIndex--; applyView(); }
 });
