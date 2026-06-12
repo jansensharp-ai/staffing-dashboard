@@ -841,12 +841,12 @@ function getMTDData() {
     }
   }
   const stores = {};
-  for (const code of Object.keys(DATA.mtdCSV)) {
+  for (const code of Object.keys(DATA.mtd)) {
     stores[code] = {
-      games:        DATA.mtdDW[code]?.games ?? 0,
-      revenue:      DATA.mtdCSV[code].revenue,
+      games:        0,
+      revenue:      DATA.mtd[code].revenue,
       laborHours:   laborHours[code] ?? null,
-      laborCost:    DATA.mtdCSV[code].laborCost,
+      laborCost:    DATA.mtd[code].laborCost,
       mgmtIncluded: true,
     };
   }
