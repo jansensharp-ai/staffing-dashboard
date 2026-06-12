@@ -791,8 +791,11 @@ const DATA = {
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let currentView      = "daily";
 let currentZone      = "All";
-let currentDateStart = DATA.history[DATA.history.length - 1].date;
-let currentDateEnd   = DATA.history[DATA.history.length - 1].date;
+// Default to last day with complete labor data (exclude today if labor not yet posted)
+const _lastCompleteIdx = DATA.history.reduce((best, d, i) =>
+  Object.values(d.stores).some(s => s.laborCost > 0) ? i : best, 0);
+let currentDateStart = DATA.history[_lastCompleteIdx].date;
+let currentDateEnd   = DATA.history[_lastCompleteIdx].date;
 let selectedDates    = null;   // null = contiguous range; array = explicit set (Last 4)
 let activeDow        = null;   // which day-of-week button is active
 
